@@ -85,9 +85,7 @@
     --input: 215 30% 20%;
     --shadow-elegant: 0 20px 60px -10px hsl(0 0% 0% / 0.4);
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
@@ -98,8 +96,8 @@
   }
 }
 
-/* Advanced Animation Classes */
 @layer utilities {
+  /* Advanced Animation Classes */
   .text-reveal {
     overflow: hidden;
   }
@@ -230,49 +228,57 @@
       transform: scale(1.02);
     }
   }
-}
 
-/* Intersection Observer Animation Classes */
-.fade-in-up {
-  opacity: 0;
-  transform: translateY(60px);
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
+  /* Intersection Observer Animation Classes */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
 
-.fade-in-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+  .fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-.fade-in-left {
-  opacity: 0;
-  transform: translateX(-60px);
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
+  .fade-in-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
 
-.fade-in-left.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
+  .fade-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
 
-.fade-in-right {
-  opacity: 0;
-  transform: translateX(60px);
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
+  .fade-in-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
 
-.fade-in-right.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
+  .fade-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
 
-.scale-in {
-  opacity: 0;
-  transform: scale(0.8);
-  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
+  .scale-in {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
 
-.scale-in.visible {
-  opacity: 1;
-  transform: scale(1);
+  .scale-in.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .transform-gpu {
+    transform: translateZ(0);
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
 }
