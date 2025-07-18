@@ -1,0 +1,158 @@
+import { useEffect, useState } from "react";
+import { useScrollAnimation } from "@/components/animations/ScrollAnimations";
+
+const Team = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  useScrollAnimation();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const section = document.getElementById('team');
+    if (section) observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
+
+  const teamMembers = [
+    {
+      name: "Vertika Mishra",
+      role: "CEO & Founder",
+      icon: "👩‍💼",
+      gradient: "bg-gradient-primary",
+      shadow: "shadow-primary",
+      delay: "delay-200"
+    },
+    {
+      name: "Tech Lead",
+      role: "AI Screening Expert",
+      icon: "👨‍💻",
+      gradient: "bg-gradient-secondary", 
+      shadow: "shadow-secondary",
+      delay: "delay-400"
+    },
+    {
+      name: "HR Manager",
+      role: "Talent Acquisition Specialist",
+      icon: "👩‍🎓",
+      gradient: "bg-gradient-accent",
+      shadow: "shadow-accent",
+      delay: "delay-600"
+    },
+    {
+      name: "Client Success Manager",
+      role: "Project Management Expert",
+      icon: "👨‍🎯",
+      gradient: "bg-gradient-primary",
+      shadow: "shadow-primary",
+      delay: "delay-800"
+    }
+  ];
+
+  return (
+    <section id="team" className="py-20 bg-gradient-to-br from-background via-muted/30 to-background relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-64 h-64 bg-gradient-primary opacity-10 rounded-full blur-3xl floating-element"></div>
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-secondary opacity-10 rounded-full blur-3xl floating-element" style={{ animationDelay: '1s' }}></div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <div className={`inline-flex items-center px-6 py-3 bg-accent/20 rounded-full mb-6 transition-all duration-1000 ${isVisible ? 'animate-slide-down' : 'opacity-0 translate-y-[-20px]'}`}>
+            <span className="text-accent font-semibold animate-text-glow">👥 Meet Our Team</span>
+          </div>
+          
+          <h2 className={`text-4xl md:text-5xl font-bold mb-6 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <span className="bg-gradient-primary bg-clip-text text-transparent animate-gradient-shift">
+              The Minds Behind
+            </span>
+            <br />
+            <span className="text-foreground">Your Success</span>
+          </h2>
+          
+          <p className={`text-xl text-muted-foreground max-w-2xl mx-auto transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            Our expert team combines deep technical knowledge with AI-powered screening 
+            to deliver exceptional IT staffing solutions.
+          </p>
+        </div>
+
+        {/* Team Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {teamMembers.map((member, index) => (
+            <div
+              key={index}
+              className={`group relative transition-all duration-1000 ${member.delay} ${
+                isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-20 scale-95'
+              }`}
+            >
+              {/* Team Member Card */}
+              <div className="relative bg-card/50 backdrop-blur-sm rounded-3xl p-8 border border-border/50 magnetic-hover group-hover:shadow-elegant transition-all duration-500">
+                {/* Avatar */}
+                <div className={`w-20 h-20 ${member.gradient} rounded-3xl ${member.shadow} flex items-center justify-center mb-6 mx-auto transform group-hover:scale-110 transition-all duration-500`}>
+                  <span className="text-3xl animate-bounce-gentle">{member.icon}</span>
+                </div>
+
+                {/* Info */}
+                <div className="text-center">
+                  <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                    {member.name}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {member.role}
+                  </p>
+                </div>
+
+                {/* Hover Glow Effect */}
+                <div className={`absolute inset-0 ${member.gradient} opacity-0 group-hover:opacity-20 rounded-3xl blur-xl transition-all duration-500 -z-10`}></div>
+              </div>
+
+              {/* Floating Connection Lines */}
+              {index < teamMembers.length - 1 && (
+                <div className={`hidden lg:block absolute top-1/2 right-0 w-8 h-px bg-gradient-to-r from-primary/50 to-transparent transition-all duration-1000 delay-1000 ${isVisible ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'}`}></div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Team Stats */}
+        <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-16 border-t border-border/30 transition-all duration-1000 delay-1200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="text-center scale-in">
+            <div className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2 animate-text-glow">
+              10+
+            </div>
+            <div className="text-muted-foreground text-sm">Years Experience</div>
+          </div>
+          <div className="text-center scale-in" style={{ animationDelay: '0.2s' }}>
+            <div className="text-3xl font-bold bg-gradient-secondary bg-clip-text text-transparent mb-2 animate-text-glow">
+              500+
+            </div>
+            <div className="text-muted-foreground text-sm">Projects Completed</div>
+          </div>
+          <div className="text-center scale-in" style={{ animationDelay: '0.4s' }}>
+            <div className="text-3xl font-bold bg-gradient-accent bg-clip-text text-transparent mb-2 animate-text-glow">
+              95%
+            </div>
+            <div className="text-muted-foreground text-sm">Client Satisfaction</div>
+          </div>
+          <div className="text-center scale-in" style={{ animationDelay: '0.6s' }}>
+            <div className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2 animate-text-glow">
+              24/7
+            </div>
+            <div className="text-muted-foreground text-sm">Support Available</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Team;

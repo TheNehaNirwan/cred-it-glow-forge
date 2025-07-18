@@ -99,79 +99,37 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Content - Hero Image with Team Timeline */}
+          {/* Right Content - Enhanced Hero Image */}
           <div className="relative">
-            {/* Main Hero Image - loads after text */}
-            <div className={`relative transition-all duration-1200 delay-1200 ${isLoaded ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-90 rotate-3'}`}>
-              <div className="relative group">
+            {/* Main Hero Image - loads with enhanced animation */}
+            <div className={`relative transition-all duration-1500 delay-1000 ${isLoaded ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-75 rotate-6'}`}>
+              <div className="relative group perspective-1000">
                 <img
                   src={heroTech}
                   alt="IT Solutions Technology"
-                  className="w-full h-auto rounded-3xl shadow-elegant floating-element magnetic-hover"
+                  className="w-full h-auto rounded-3xl shadow-elegant floating-element magnetic-hover transform-gpu"
                 />
                 
-                {/* Animated floating badges */}
-                <div className={`absolute -top-6 -left-6 w-20 h-20 bg-gradient-accent rounded-2xl shadow-glow flex items-center justify-center transition-all duration-1000 delay-1600 ${isLoaded ? 'animate-zoom-in' : 'opacity-0 scale-0'}`}>
-                  <span className="text-2xl animate-bounce-gentle">💡</span>
+                {/* Enhanced floating badges with cooler animations */}
+                <div className={`absolute -top-8 -left-8 w-24 h-24 bg-gradient-accent rounded-3xl shadow-glow flex items-center justify-center transition-all duration-1500 delay-1400 ${isLoaded ? 'animate-zoom-in rotate-12' : 'opacity-0 scale-0 rotate-45'}`}>
+                  <span className="text-3xl animate-bounce-gentle">💡</span>
                 </div>
-                <div className={`absolute -bottom-6 -right-6 w-16 h-16 bg-gradient-secondary rounded-2xl shadow-secondary flex items-center justify-center transition-all duration-1000 delay-1800 ${isLoaded ? 'animate-zoom-in' : 'opacity-0 scale-0'}`}>
-                  <span className="text-xl animate-wiggle">🚀</span>
+                <div className={`absolute -bottom-8 -right-8 w-20 h-20 bg-gradient-secondary rounded-3xl shadow-secondary flex items-center justify-center transition-all duration-1500 delay-1600 ${isLoaded ? 'animate-zoom-in rotate-[-15deg]' : 'opacity-0 scale-0 rotate-[-45deg]'}`}>
+                  <span className="text-2xl animate-wiggle">🚀</span>
                 </div>
-                <div className={`absolute top-1/4 -right-4 w-12 h-12 bg-gradient-primary rounded-xl shadow-primary flex items-center justify-center transition-all duration-1000 delay-2000 ${isLoaded ? 'animate-zoom-in' : 'opacity-0 scale-0'}`}>
-                  <span className="text-lg animate-spin-slow">⚡</span>
+                <div className={`absolute top-1/3 -right-6 w-16 h-16 bg-gradient-primary rounded-2xl shadow-primary flex items-center justify-center transition-all duration-1500 delay-1800 ${isLoaded ? 'animate-zoom-in rotate-6' : 'opacity-0 scale-0 rotate-90'}`}>
+                  <span className="text-xl animate-spin-slow">⚡</span>
+                </div>
+                
+                {/* New floating success metrics */}
+                <div className={`absolute top-1/4 -left-6 w-18 h-18 bg-gradient-accent rounded-2xl shadow-accent flex items-center justify-center transition-all duration-1500 delay-2000 ${isLoaded ? 'animate-zoom-in rotate-[-8deg]' : 'opacity-0 scale-0 rotate-[-60deg]'}`}>
+                  <span className="text-lg animate-pulse">🎯</span>
                 </div>
               </div>
+              
+              {/* Enhanced glow effects */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-primary opacity-20 blur-2xl animate-pulse-slow -z-10"></div>
             </div>
-
-            {/* Creative Team Timeline */}
-            <div className="absolute -left-12 top-16 space-y-6">
-              {/* Team Member 1 - CEO */}
-              <div className={`flex items-center gap-3 transition-all duration-1000 delay-2200 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-[-50px]'}`}>
-                <div className="w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center shadow-glow">
-                  <span className="text-lg">👩‍💼</span>
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/20">
-                  <p className="text-sm font-semibold text-navy-foreground">CEO</p>
-                  <p className="text-xs text-navy-foreground/70">Vertika Mishra</p>
-                </div>
-              </div>
-
-              {/* Team Member 2 - Tech Lead */}
-              <div className={`flex items-center gap-3 transition-all duration-1000 delay-2400 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-[-50px]'}`}>
-                <div className="w-12 h-12 rounded-full bg-gradient-secondary flex items-center justify-center shadow-secondary">
-                  <span className="text-lg">👨‍💻</span>
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/20">
-                  <p className="text-sm font-semibold text-navy-foreground">Tech Lead</p>
-                  <p className="text-xs text-navy-foreground/70">AI Screening Expert</p>
-                </div>
-              </div>
-
-              {/* Team Member 3 - HR Manager */}
-              <div className={`flex items-center gap-3 transition-all duration-1000 delay-2600 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-[-50px]'}`}>
-                <div className="w-12 h-12 rounded-full bg-gradient-accent flex items-center justify-center shadow-accent">
-                  <span className="text-lg">👩‍🎓</span>
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/20">
-                  <p className="text-sm font-semibold text-navy-foreground">HR Manager</p>
-                  <p className="text-xs text-navy-foreground/70">Talent Acquisition</p>
-                </div>
-              </div>
-
-              {/* Team Member 4 - Client Success */}
-              <div className={`flex items-center gap-3 transition-all duration-1000 delay-2800 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-[-50px]'}`}>
-                <div className="w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center shadow-primary">
-                  <span className="text-lg">👨‍🎯</span>
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/20">
-                  <p className="text-sm font-semibold text-navy-foreground">Client Success</p>
-                  <p className="text-xs text-navy-foreground/70">Project Manager</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Right side timeline connector */}
-            <div className={`absolute -right-8 top-20 bottom-20 w-px bg-gradient-to-b from-primary/50 via-secondary/50 to-accent/50 transition-all duration-1000 delay-3000 ${isLoaded ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-0'}`}></div>
           </div>
         </div>
 

@@ -167,6 +167,11 @@ export default {
 				'text-glow': 'text-glow 2s ease-in-out infinite'
 			}
 		}
-	},
+        ".transform-gpu": {
+          "transform": "translateZ(0)",
+        },
+        ".perspective-1000": {
+          "perspective": "1000px",
+        },
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;
