@@ -38,29 +38,14 @@ const Hero = () => {
             </div>
             
             {/* Animated Main Heading */}
-            <div className="mb-6">
+            <div className="mb-8">
               <div className={`transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <AnimatedText 
-                  text="Empowering your business"
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold text-navy-foreground leading-tight"
+                  text="Empowering your business through IT services"
+                  className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent leading-tight animate-gradient-shift"
                   delay={0.3}
                 />
               </div>
-              <div className={`transition-all duration-1000 delay-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                <AnimatedText 
-                  text="through IT services"
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent leading-tight animate-gradient-shift"
-                  delay={0.8}
-                />
-              </div>
-            </div>
-            
-            {/* Animated Description */}
-            <div className={`transition-all duration-1000 delay-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <p className="text-xl text-navy-foreground/80 mb-8 leading-relaxed">
-                We are a consultancy firm specializing in IT staffing solutions, providing top-notch 
-                IT professionals and strategic guidance for your growth and transformation.
-              </p>
             </div>
             
             {/* Animated Key Benefits */}
