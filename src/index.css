@@ -63,11 +63,11 @@
     --shadow-glow: 0 0 40px hsl(var(--primary) / 0.4);
 
     /* Animations */
-  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  
-  /* 3D Perspective */
-  --perspective: 1000px;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* 3D Perspective */
+    --perspective: 1000px;
 
     --radius: 12px;
   }
