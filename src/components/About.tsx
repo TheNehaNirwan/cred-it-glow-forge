@@ -47,9 +47,9 @@ const About = () => {
             <span className="text-secondary font-semibold text-sm animate-text-glow">👥 About Us</span>
           </div>
           <h2 className={`text-4xl md:text-5xl font-bold text-foreground mb-6 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            Meet{" "}
-            <span className="bg-gradient-secondary bg-clip-text text-transparent animate-gradient-shift">
-              CRED IT SOLUTIONS
+            <span className="font-serif italic">Meet</span>{" "}
+            <span className="bg-gradient-secondary bg-clip-text text-transparent animate-gradient-shift font-bold">
+              CREDIBLE IT SOLUTIONS
             </span>
           </h2>
         </div>
@@ -57,7 +57,7 @@ const About = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
           {/* About Content */}
           <div className="fade-in-left">
-            <h3 className={`text-3xl font-bold text-foreground mb-6 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <h3 className={`text-3xl font-serif italic text-primary mb-6 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               Your Trusted Partner in IT Excellence
             </h3>
             
@@ -118,9 +118,9 @@ const About = () => {
 
         {/* Values Section */}
         <div className="animate-fade-in">
-          <h3 className="text-3xl font-bold text-center text-foreground mb-12">
-            Why Choose{" "}
-            <span className="bg-gradient-primary bg-clip-text text-transparent">
+          <h3 className="text-3xl text-center mb-12">
+            <span className="font-serif italic text-primary">Why Choose</span>{" "}
+            <span className="bg-gradient-primary bg-clip-text text-transparent font-bold">
               CRED IT SOLUTIONS
             </span>
           </h3>
@@ -135,7 +135,7 @@ const About = () => {
                   <div className="w-12 h-12 bg-gradient-secondary rounded-xl mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
                     <CheckCircle className="w-6 h-6 text-secondary-foreground" />
                   </div>
-                  <h4 className="text-lg font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">
+                  <h4 className="text-lg font-serif italic text-foreground mb-3 group-hover:text-secondary transition-colors">
                     {value.title}
                   </h4>
                   <p className="text-muted-foreground leading-relaxed">
@@ -149,7 +149,7 @@ const About = () => {
 
         {/* Contact Info */}
         <div className="mt-16 text-center bg-gradient-hero rounded-3xl p-8 animate-fade-in">
-          <h4 className="text-2xl font-bold text-navy-foreground mb-4">
+          <h4 className="text-2xl font-serif italic text-navy-foreground mb-4">
             Ready to Get Started?
           </h4>
           <p className="text-navy-foreground/80 mb-6">
@@ -158,7 +158,7 @@ const About = () => {
           <div className="text-navy-foreground">
             <p className="font-semibold text-lg mb-2">Best regards,</p>
             <p className="text-xl font-bold text-accent mb-2">Vertika Mishra</p>
-            <p className="font-medium">CRED IT SOLUTIONS</p>
+            <p className="font-medium">CREDIBLE IT SOLUTIONS</p>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone, Mail } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -9,25 +9,6 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-b border-border/50">
-      {/* Top Contact Bar */}
-      <div className="bg-gradient-primary py-2">
-        <div className="container mx-auto px-4 flex justify-between items-center text-sm text-primary-foreground">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <Phone className="w-4 h-4" />
-              <span>8433613966</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Mail className="w-4 h-4" />
-              <span>hr@credibleit.tech</span>
-            </div>
-          </div>
-          <div className="hidden md:block">
-            <span className="font-medium">Your Partner in IT Excellence</span>
-          </div>
-        </div>
-      </div>
-
       {/* Main Navigation */}
       <nav className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
@@ -36,7 +17,7 @@ const Header = () => {
             <img
               src="/lovable-uploads/6731b8a1-697c-4526-975c-d7303829f190.png"
               alt="CREDIBLE IT SOLUTIONS"
-              className="w-16 h-16 object-contain"
+              className="w-20 h-20 object-contain" // Adjusted from w-24 h-24
             />
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
@@ -56,6 +37,9 @@ const Header = () => {
             </a>
             <a href="#about" className="text-foreground hover:text-primary transition-colors font-medium">
               About Us
+            </a>
+            <a href="#careers" className="text-foreground hover:text-primary transition-colors font-medium">
+              Careers
             </a>
             <a href="#contact" className="text-foreground hover:text-primary transition-colors font-medium">
               Contact

@@ -68,15 +68,15 @@ const Team = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <div className={`inline-flex items-center px-6 py-3 bg-accent/20 rounded-full mb-6 transition-all duration-1000 ${isVisible ? 'animate-slide-down' : 'opacity-0 translate-y-[-20px]'}`}>
-            <span className="text-accent font-semibold animate-text-glow">👥 Meet Our Team</span>
+            <span className="text-accent font-semibold animate-text-glow">👥 Our Leadership</span>
           </div>
           
           <h2 className={`text-4xl md:text-5xl font-bold mb-6 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <span className="bg-gradient-primary bg-clip-text text-transparent animate-gradient-shift">
-              The Minds Behind
+            <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient-shift">
+              Innovators & Experts
             </span>
             <br />
-            <span className="text-foreground">Your Success</span>
+            <span className="text-accent">Driving Excellence</span>
           </h2>
           
           <p className={`text-xl text-muted-foreground max-w-2xl mx-auto transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>

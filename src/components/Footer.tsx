@@ -9,11 +9,14 @@ const Footer = () => {
           {/* Company Info */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-6">
-              <img
-                src="/lovable-uploads/8b60bfa9-4396-411e-8a05-f2dcde695875.png"
-                alt="CREDIBLE IT SOLUTIONS"
-                className="w-16 h-16 object-contain"
-              />
+              <div className="relative">
+                <img
+                  src="/lovable-uploads/6731b8a1-697c-4526-975c-d7303829f190.png"
+                  alt="CREDIBLE IT SOLUTIONS"
+                  className="w-32 h-32 object-contain relative z-10"
+                />
+                <div className="absolute inset-0 bg-gradient-primary opacity-20 blur-xl rounded-full"></div>
+              </div>
               <div>
                 <h3 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
                   CREDIBLE IT SOLUTIONS

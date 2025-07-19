@@ -93,17 +93,7 @@ const Contact = () => {
             </div>
 
             {/* Logo */}
-            <div className="mt-8 text-center animate-fade-in">
-              <img
-                src="/lovable-uploads/8b60bfa9-4396-411e-8a05-f2dcde695875.png"
-                alt="CREDIBLE IT SOLUTIONS"
-                className="w-32 h-32 mx-auto object-contain mb-4 animate-float"
-              />
-              <h4 className="text-lg font-bold bg-gradient-primary bg-clip-text text-transparent">
-                CREDIBLE IT SOLUTIONS
-              </h4>
-              <p className="text-muted-foreground">Your Partner in IT Excellence</p>
-            </div>
+       
           </div>
 
           {/* Contact Form */}

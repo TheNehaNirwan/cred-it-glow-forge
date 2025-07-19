@@ -66,8 +66,8 @@ const Services = () => {
             <span className="text-primary font-semibold text-sm animate-text-glow">🎯 Our Services</span>
           </div>
           <h2 className={`text-4xl md:text-5xl font-bold text-foreground mb-6 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            Comprehensive{" "}
-            <span className="bg-gradient-primary bg-clip-text text-transparent animate-gradient-shift">
+            <span className="font-serif italic">Comprehensive</span>{" "}
+            <span className="bg-gradient-primary bg-clip-text text-transparent animate-gradient-shift font-bold">
               IT Solutions
             </span>
           </h2>
@@ -99,7 +99,7 @@ const Services = () => {
               </div>
 
               <CardHeader className="pb-4">
-                <CardTitle className="text-2xl font-bold text-foreground group-hover:text-primary transition-all duration-300 group-hover:animate-text-glow">
+                <CardTitle className="text-2xl font-serif italic text-foreground group-hover:text-primary transition-all duration-300 group-hover:animate-text-glow">
                   {service.title}
                 </CardTitle>
                 <CardDescription className="text-muted-foreground text-lg group-hover:text-foreground transition-colors duration-300">
@@ -136,7 +136,7 @@ const Services = () => {
           <div className="absolute top-0 left-0 w-32 h-32 bg-accent/10 rounded-full animate-float"></div>
           <div className="absolute bottom-0 right-0 w-24 h-24 bg-secondary/10 rounded-full animate-float-reverse"></div>
           
-          <h3 className="text-3xl md:text-4xl font-bold text-navy-foreground mb-6 animate-text-glow relative z-10">
+          <h3 className="text-3xl md:text-4xl font-serif italic text-navy-foreground mb-6 animate-text-glow relative z-10">
             Ready to Transform Your Business?
           </h3>
           <p className="text-xl text-navy-foreground/80 mb-8 max-w-2xl mx-auto relative z-10">

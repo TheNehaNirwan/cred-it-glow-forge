@@ -7,10 +7,23 @@ import heroTech from "@/assets/hero-tech.jpg";
 
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [displayText, setDisplayText] = useState("");
+  const fullText = "Empowering your business through IT services";
   useScrollAnimation();
 
   useEffect(() => {
     setIsLoaded(true);
+    let currentIndex = 0;
+    const interval = setInterval(() => {
+      if (currentIndex <= fullText.length) {
+        setDisplayText(fullText.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 50); // Adjust speed as needed
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -28,24 +41,17 @@ const Hero = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-accent opacity-10 rounded-full blur-3xl floating-element" style={{ animationDelay: '2s' }}></div>
       </div>
       
-      <div className="container mx-auto px-4 relative z-10 pt-32 pb-20">
+      <div className="container mx-auto px-4 relative z-10 pt-48 pb-20"> {/* Increased pt-32 to pt-48 */}
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="text-center lg:text-left">
-            {/* Animated Badge */}
-            <div className={`inline-flex items-center px-4 py-2 bg-accent/20 rounded-full mb-6 transition-all duration-700 ${isLoaded ? 'animate-slide-down' : 'opacity-0 translate-y-[-20px]'}`}>
-              <span className="text-accent font-semibold text-sm animate-text-glow">🚀 Your Partner in IT Excellence</span>
-            </div>
-            
-            {/* Animated Main Heading */}
+        
+            {/* Main Heading with Letter Animation */}
             <div className="mb-8">
-              <div className={`transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                <AnimatedText 
-                  text="Empowering your business through IT services"
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent leading-tight animate-gradient-shift"
-                  delay={0.3}
-                />
-              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent leading-tight animate-gradient-shift">
+                {displayText}
+                <span className="animate-blink">|</span>
+              </h1>
             </div>
             
             {/* Animated Key Benefits */}
