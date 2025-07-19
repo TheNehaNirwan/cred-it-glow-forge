@@ -7,6 +7,14 @@ const Header = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setIsMenuOpen(false);
+    }
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-b border-border/50">
       {/* Main Navigation */}
@@ -17,7 +25,7 @@ const Header = () => {
             <img
               src="/lovable-uploads/6731b8a1-697c-4526-975c-d7303829f190.png"
               alt="CREDIBLE IT SOLUTIONS"
-              className="w-20 h-20 object-contain" // Adjusted from w-24 h-24
+              className="w-20 h-20 object-contain"
             />
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
@@ -29,26 +37,30 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
-            <a href="#home" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a href="#home" className="text-foreground hover:text-primary transition-colors font-medium" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}>
               Home
             </a>
-            <a href="#services" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a href="#services" className="text-foreground hover:text-primary transition-colors font-medium" onClick={(e) => { e.preventDefault(); scrollToSection('services'); }}>
               Services
             </a>
-            <a href="#about" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a href="#about" className="text-foreground hover:text-primary transition-colors font-medium" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}>
               About Us
             </a>
-            <a href="#careers" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a href="#careers" className="text-foreground hover:text-primary transition-colors font-medium" onClick={(e) => { e.preventDefault(); scrollToSection('careers'); }}>
               Careers
             </a>
-            <a href="#contact" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a href="#contact" className="text-foreground hover:text-primary transition-colors font-medium" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>
               Contact
             </a>
           </div>
 
           {/* CTA Button & Mobile Menu */}
           <div className="flex items-center space-x-4">
-            <Button variant="hero" className="hidden md:flex">
+            <Button 
+              variant="hero" 
+              className="hidden md:flex"
+              onClick={() => scrollToSection('contact')}
+            >
               Get Started
             </Button>
             
@@ -74,32 +86,43 @@ const Header = () => {
               <a
                 href="#home"
                 className="text-foreground hover:text-primary transition-colors font-medium py-2"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}
               >
                 Home
               </a>
               <a
                 href="#services"
                 className="text-foreground hover:text-primary transition-colors font-medium py-2"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => { e.preventDefault(); scrollToSection('services'); }}
               >
                 Services
               </a>
               <a
                 href="#about"
                 className="text-foreground hover:text-primary transition-colors font-medium py-2"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}
               >
                 About Us
               </a>
               <a
+                href="#careers"
+                className="text-foreground hover:text-primary transition-colors font-medium py-2"
+                onClick={(e) => { e.preventDefault(); scrollToSection('careers'); }}
+              >
+                Careers
+              </a>
+              <a
                 href="#contact"
                 className="text-foreground hover:text-primary transition-colors font-medium py-2"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
               >
                 Contact
               </a>
-              <Button variant="hero" className="self-start mt-4">
+              <Button 
+                variant="hero" 
+                className="self-start mt-4"
+                onClick={() => scrollToSection('contact')}
+              >
                 Get Started
               </Button>
             </div>

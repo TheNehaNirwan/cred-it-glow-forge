@@ -1,10 +1,64 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Send, Facebook, Instagram } from "lucide-react";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    company: "",
+    message: ""
+  });
+
+  // Handle URL parameters for pre-filling service
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.hash.split('?')[1]);
+    const service = urlParams.get('service');
+    if (service) {
+      setFormData(prev => ({
+        ...prev,
+        message: `I'm interested in your ${service} service. `
+      }));
+    }
+  }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Here you would typically send the form data to your backend
+    console.log('Form submitted:', formData);
+    // For now, let's open the email client
+    const subject = encodeURIComponent('Business Inquiry');
+    const body = encodeURIComponent(`
+Name: ${formData.firstName} ${formData.lastName}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Company: ${formData.company}
+Message: ${formData.message}
+    `);
+    window.location.href = `mailto:hr@credibleit.tech?subject=${subject}&body=${body}`;
+  };
+
+  const handleEmailClick = (email: string) => {
+    window.location.href = `mailto:${email}`;
+  };
+
+  const handlePhoneClick = (phone: string) => {
+    window.location.href = `tel:${phone}`;
+  };
+
   const contactMethods = [
     {
       icon: Phone,
@@ -33,6 +87,22 @@ const Contact = () => {
       details: "Mon - Fri: 9AM - 6PM",
       description: "Weekend support available",
       gradient: "bg-gradient-primary"
+    },
+    {
+      icon: Facebook,
+      title: "Facebook",
+      details: "Follow us on Facebook",
+      description: "Stay updated with our latest news",
+      gradient: "bg-gradient-secondary",
+      link: "https://facebook.com/credibleitsolutions"
+    },
+    {
+      icon: Instagram,
+      title: "Instagram",
+      details: "Follow us on Instagram",
+      description: "See our latest updates and stories",
+      gradient: "bg-gradient-accent",
+      link: "https://instagram.com/credibleitsolutions"
     }
   ];
 
@@ -67,8 +137,17 @@ const Contact = () => {
               {contactMethods.map((method, index) => (
                 <Card 
                   key={index} 
-                  className="group border-0 shadow-elegant hover:shadow-primary transition-all duration-300 hover:-translate-y-1 animate-scale-in"
+                  className="group border-0 shadow-elegant hover:shadow-primary transition-all duration-300 hover:-translate-y-1 animate-scale-in cursor-pointer"
                   style={{ animationDelay: `${index * 0.1}s` }}
+                  onClick={() => {
+                    if (method.icon === Phone) {
+                      handlePhoneClick(method.details);
+                    } else if (method.icon === Mail) {
+                      handleEmailClick(method.details);
+                    } else if (method.link) {
+                      window.open(method.link, '_blank');
+                    }
+                  }}
                 >
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
@@ -91,9 +170,6 @@ const Contact = () => {
                 </Card>
               ))}
             </div>
-
-            {/* Logo */}
-       
           </div>
 
           {/* Contact Form */}
@@ -108,78 +184,103 @@ const Contact = () => {
                 </p>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        First Name *
+                      </label>
+                      <Input 
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleInputChange}
+                        placeholder="Enter your first name"
+                        className="h-12"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Last Name *
+                      </label>
+                      <Input 
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleInputChange}
+                        placeholder="Enter your last name"
+                        className="h-12"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Email Address *
+                      </label>
+                      <Input 
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="Enter your email"
+                        className="h-12"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Phone Number
+                      </label>
+                      <Input 
+                        name="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder="Enter your phone number"
+                        className="h-12"
+                      />
+                    </div>
+                  </div>
+
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      First Name *
+                      Company Name
                     </label>
                     <Input 
-                      placeholder="Enter your first name"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleInputChange}
+                      placeholder="Enter your company name"
                       className="h-12"
                     />
                   </div>
+
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Last Name *
+                      How can we help you? *
                     </label>
-                    <Input 
-                      placeholder="Enter your last name"
-                      className="h-12"
+                    <Textarea 
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      placeholder="Tell us about your IT staffing needs, project requirements, or any questions you have..."
+                      className="min-h-32 resize-none"
+                      required
                     />
                   </div>
-                </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Email Address *
-                    </label>
-                    <Input 
-                      type="email"
-                      placeholder="Enter your email"
-                      className="h-12"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Phone Number
-                    </label>
-                    <Input 
-                      type="tel"
-                      placeholder="Enter your phone number"
-                      className="h-12"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Company Name
-                  </label>
-                  <Input 
-                    placeholder="Enter your company name"
-                    className="h-12"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    How can we help you? *
-                  </label>
-                  <Textarea 
-                    placeholder="Tell us about your IT staffing needs, project requirements, or any questions you have..."
-                    className="min-h-32 resize-none"
-                  />
-                </div>
-
-                <Button 
-                  variant="hero" 
-                  size="lg" 
-                  className="w-full group animate-pulse-glow"
-                >
-                  Send Message
-                  <Send className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
+                  <Button 
+                    type="submit"
+                    variant="hero" 
+                    size="lg" 
+                    className="w-full group animate-pulse-glow"
+                  >
+                    Send Message
+                    <Send className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </form>
 
                 <p className="text-sm text-muted-foreground text-center">
                   By submitting this form, you agree to our privacy policy and terms of service.
@@ -203,6 +304,7 @@ const Contact = () => {
               variant="hero" 
               size="xl" 
               className="bg-accent hover:bg-accent-glow animate-pulse-glow"
+              onClick={() => handlePhoneClick('8433613966')}
             >
               <Phone className="w-5 h-5 mr-2" />
               Call Now: 8433613966
@@ -211,6 +313,7 @@ const Contact = () => {
               variant="outline" 
               size="xl"
               className="border-navy-foreground/30 text-navy-foreground hover:bg-navy-foreground hover:text-navy"
+              onClick={() => handleEmailClick('hr@credibleit.tech')}
             >
               <Mail className="w-5 h-5 mr-2" />
               Email Us

@@ -52,10 +52,10 @@ const Careers = () => {
     <section id="careers" className="py-20 bg-gradient-to-b from-background to-background/80">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-accent mb-4">
+          <h2 className="text-4xl font-bold text-gray-800 mb-4">
             <AnimatedText text="Join Our Team" className="inline-block" />
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-gray-600 max-w-2xl mx-auto">
             We're always looking for talented individuals to join our team. Check out our current openings below.
           </p>
         </div>
@@ -67,8 +67,8 @@ const Careers = () => {
               className="bg-card rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-border/50 hover:border-accent/50 cursor-pointer"
               onClick={() => setSelectedJob(job)}
             >
-              <h3 className="text-xl font-semibold mb-3 text-primary">{job.title}</h3>
-              <p className="text-muted-foreground mb-4">{job.description}</p>
+              <h3 className="text-xl font-semibold mb-3 text-gray-800">{job.title}</h3>
+              <p className="text-gray-600 mb-4">{job.description}</p>
               <div className="flex items-center gap-2 text-sm text-accent">
                 <span className="font-medium">Experience:</span>
                 <span>{job.experience}</span>
@@ -78,7 +78,12 @@ const Careers = () => {
                 className="mt-4 w-full hover:bg-accent hover:text-accent-foreground"
                 onClick={(e) => {
                   e.stopPropagation();
-                  window.location.href = `#contact?job=${encodeURIComponent(job.title)}`;
+                  const contactSection = document.getElementById('contact');
+                  if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                    // Add job title to URL for pre-filling the form
+                    window.history.pushState({}, '', `#contact?job=${encodeURIComponent(job.title)}`);
+                  }
                 }}
               >
                 Apply Now
@@ -111,8 +116,12 @@ const Careers = () => {
                   variant="default"
                   className="w-full"
                   onClick={() => {
-                    window.location.href = `#contact?job=${encodeURIComponent(selectedJob.title)}`;
-                    setSelectedJob(null);
+                    const contactSection = document.getElementById('contact');
+                    if (contactSection) {
+                      contactSection.scrollIntoView({ behavior: 'smooth' });
+                      window.history.pushState({}, '', `#contact?job=${encodeURIComponent(selectedJob.title)}`);
+                      setSelectedJob(null);
+                    }
                   }}
                 >
                   Apply Now

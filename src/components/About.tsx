@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Users, Target, Award, ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "@/components/animations/ScrollAnimations";
+import { motion } from "framer-motion";
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -43,21 +44,28 @@ const About = () => {
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-16 fade-in-up">
-          <div className={`inline-flex items-center px-4 py-2 bg-secondary/10 rounded-full mb-6 transition-all duration-700 ${isVisible ? 'animate-slide-down' : 'opacity-0 translate-y-[-20px]'}`}>
-            <span className="text-secondary font-semibold text-sm animate-text-glow">👥 About Us</span>
+          <div className={`inline-flex items-center px-4 py-2 bg-indigo-900/10 rounded-full mb-6 transition-all duration-700 ${isVisible ? 'animate-slide-down' : 'opacity-0 translate-y-[-20px]'}`}>
+            <span className="text-indigo-900 font-semibold text-sm animate-text-glow">✨ Who We Are</span>
           </div>
-          <h2 className={`text-4xl md:text-5xl font-bold text-foreground mb-6 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <span className="font-serif italic">Meet</span>{" "}
-            <span className="bg-gradient-secondary bg-clip-text text-transparent animate-gradient-shift font-bold">
-              CREDIBLE IT SOLUTIONS
+          <h2 className={`text-4xl md:text-5xl font-bold mb-6 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <span className="font-serif italic text-gray-800">Transforming Ideas</span>{" "}
+            <span className="bg-gradient-to-r from-indigo-900 to-purple-900 bg-clip-text text-transparent animate-gradient-shift font-bold">
+              Into Digital Excellence
             </span>
           </h2>
+          <motion.div 
+            className="w-24 h-1 bg-gradient-to-r from-indigo-900 to-purple-900 mx-auto mt-6"
+            initial={{ width: 0 }}
+            whileInView={{ width: 96 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          ></motion.div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
           {/* About Content */}
           <div className="fade-in-left">
-            <h3 className={`text-3xl font-serif italic text-primary mb-6 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <h3 className={`text-3xl font-serif italic text-gray-800 mb-6 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               Your Trusted Partner in IT Excellence
             </h3>
             
@@ -119,7 +127,7 @@ const About = () => {
         {/* Values Section */}
         <div className="animate-fade-in">
           <h3 className="text-3xl text-center mb-12">
-            <span className="font-serif italic text-primary">Why Choose</span>{" "}
+            <span className="font-serif italic text-gray-800">Why Choose</span>{" "}
             <span className="bg-gradient-primary bg-clip-text text-transparent font-bold">
               CRED IT SOLUTIONS
             </span>
@@ -135,10 +143,10 @@ const About = () => {
                   <div className="w-12 h-12 bg-gradient-secondary rounded-xl mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
                     <CheckCircle className="w-6 h-6 text-secondary-foreground" />
                   </div>
-                  <h4 className="text-lg font-serif italic text-foreground mb-3 group-hover:text-secondary transition-colors">
+                  <h4 className="text-lg font-serif italic text-gray-800 mb-3 group-hover:text-secondary transition-colors">
                     {value.title}
                   </h4>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-gray-600 leading-relaxed">
                     {value.description}
                   </p>
                 </CardContent>

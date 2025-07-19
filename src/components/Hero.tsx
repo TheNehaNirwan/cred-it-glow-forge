@@ -26,6 +26,13 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="home" className="relative min-h-screen bg-gradient-hero flex items-center overflow-hidden">
       {/* Floating Background Elements */}
@@ -76,6 +83,7 @@ const Hero = () => {
                 variant="hero" 
                 size="xl" 
                 className="group glow-pulse magnetic-hover"
+                onClick={() => scrollToSection('contact')}
               >
                 Get Free Consultation
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
@@ -84,6 +92,7 @@ const Hero = () => {
                 variant="outline" 
                 size="xl"
                 className="border-navy-foreground/30 text-navy-foreground hover:bg-navy-foreground hover:text-navy magnetic-hover"
+                onClick={() => scrollToSection('services')}
               >
                 View Our Services
               </Button>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useScrollAnimation } from "@/components/animations/ScrollAnimations";
+import { motion } from "framer-motion";
 
 const Team = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -66,24 +67,50 @@ const Team = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <div className={`inline-flex items-center px-6 py-3 bg-accent/20 rounded-full mb-6 transition-all duration-1000 ${isVisible ? 'animate-slide-down' : 'opacity-0 translate-y-[-20px]'}`}>
             <span className="text-accent font-semibold animate-text-glow">👥 Our Leadership</span>
           </div>
           
-          <h2 className={`text-4xl md:text-5xl font-bold mb-6 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient-shift">
-              Innovators & Experts
-            </span>
+          <motion.h2 
+            className="text-4xl md:text-5xl font-bold mb-6"
+            initial={{ opacity: 0, scale: 0.5 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <span className="font-serif italic text-gray-800">Exceptional Team</span>{" "}
             <br />
-            <span className="text-accent">Driving Excellence</span>
-          </h2>
+            <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient-shift font-bold">
+              Extraordinary Results
+            </span>
+          </motion.h2>
           
-          <p className={`text-xl text-muted-foreground max-w-2xl mx-auto transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            Our expert team combines deep technical knowledge with AI-powered screening 
-            to deliver exceptional IT staffing solutions.
-          </p>
-        </div>
+          <motion.p 
+            className="text-xl text-gray-600 max-w-2xl mx-auto"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            Our expert team combines deep technical knowledge with innovative solutions 
+            to deliver exceptional results for your business.
+          </motion.p>
+
+          <motion.div 
+            className="w-24 h-1 bg-gradient-primary mx-auto mt-6"
+            initial={{ width: 0 }}
+            whileInView={{ width: 96 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          ></motion.div>
+        </motion.div>
 
         {/* Team Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -103,10 +130,10 @@ const Team = () => {
 
                 {/* Info */}
                 <div className="text-center">
-                  <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-primary transition-colors">
                     {member.name}
                   </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-gray-600 text-sm leading-relaxed">
                     {member.role}
                   </p>
                 </div>
