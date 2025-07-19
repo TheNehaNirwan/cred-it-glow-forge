@@ -8,23 +8,64 @@ import heroTech from "@/assets/hero-tech.jpg";
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [displayText, setDisplayText] = useState("");
-  const fullText = "Empowering your business through IT services";
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopNum, setLoopNum] = useState(0);
+  const [typingSpeed, setTypingSpeed] = useState(150);
+
+  const phrases = [
+    "through IT services",
+    "with innovative solutions",
+    "via digital transformation",
+    "using cutting-edge tech"
+  ];
+  const staticText = "Empowering your business ";
+  
   useScrollAnimation();
 
   useEffect(() => {
     setIsLoaded(true);
-    let currentIndex = 0;
-    const interval = setInterval(() => {
-      if (currentIndex <= fullText.length) {
-        setDisplayText(fullText.slice(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 50); // Adjust speed as needed
-
-    return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const handleTyping = () => {
+      const currentPhrase = phrases[loopNum % phrases.length];
+      const shouldDelete = isDeleting;
+      const fullText = staticText + currentPhrase;
+
+      if (!shouldDelete && displayText === fullText) {
+        // Finished typing current phrase
+        setTimeout(() => setIsDeleting(true), 2000); // Wait before deleting
+        return;
+      }
+
+      if (shouldDelete && displayText === staticText) {
+        // Finished deleting
+        setIsDeleting(false);
+        setLoopNum(prev => prev + 1);
+        setTypingSpeed(150); // Reset typing speed
+        return;
+      }
+
+      const delta = shouldDelete ? -typingSpeed : typingSpeed;
+      const targetText = shouldDelete
+        ? fullText.substring(0, displayText.length - 1)
+        : fullText.substring(0, displayText.length + 1);
+
+      setDisplayText(targetText);
+
+      // Adjust typing speed for natural feel
+      if (!shouldDelete && displayText === staticText) {
+        setTypingSpeed(80); // Faster when starting new phrase
+      } else if (shouldDelete) {
+        setTypingSpeed(50); // Faster when deleting
+      } else {
+        setTypingSpeed(150); // Normal typing speed
+      }
+    };
+
+    const timer = setTimeout(handleTyping, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, loopNum, typingSpeed]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -57,7 +98,7 @@ const Hero = () => {
             <div className="mb-8">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent leading-tight animate-gradient-shift">
                 {displayText}
-                <span className="animate-blink">|</span>
+                <span className={`animate-blink ml-1 ${isDeleting ? 'text-red-500' : 'text-primary'}`}>|</span>
               </h1>
             </div>
             
