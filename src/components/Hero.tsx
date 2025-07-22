@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { AnimatedText, useScrollAnimation } from "@/components/animations/ScrollAnimations";
 import { FloatingElements } from "@/components/animations/FloatingElements";
@@ -89,7 +90,7 @@ const Hero = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-accent opacity-10 rounded-full blur-3xl floating-element" style={{ animationDelay: '2s' }}></div>
       </div>
       
-      <div className="container mx-auto px-4 relative z-10 pt-48 pb-20"> {/* Increased pt-32 to pt-48 */}
+      <Container className="relative z-10 pt-48 pb-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="text-center lg:text-left">
@@ -201,7 +202,7 @@ const Hero = () => {
             <div className="text-navy-foreground/70">Support Available</div>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

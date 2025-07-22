@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Users, Target, Award, ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "@/components/animations/ScrollAnimations";
@@ -41,7 +42,7 @@ const About = () => {
 
   return (
     <section id="about" className="py-20 bg-muted/30">
-      <div className="container mx-auto px-4">
+      <Container>
         {/* Section Header */}
         <div className="text-center mb-16 fade-in-up">
           <div className={`inline-flex items-center px-4 py-2 bg-indigo-900/10 rounded-full mb-6 transition-all duration-700 ${isVisible ? 'animate-slide-down' : 'opacity-0 translate-y-[-20px]'}`}>
@@ -169,7 +170,7 @@ const About = () => {
             <p className="font-medium">CREDIBLE IT SOLUTIONS</p>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Code, Server, Brain, Users, Shield, Smartphone, ArrowRight } from "lucide-react";
 import { motion, useInView } from "framer-motion";
@@ -88,7 +89,7 @@ const Services = () => {
 
   return (
     <section id="services" className="py-20 bg-background" ref={ref}>
-      <div className="container mx-auto px-4">
+      <Container>
         {/* Section Header */}
         <motion.div 
           className="text-center mb-16"
@@ -306,7 +307,7 @@ const Services = () => {
             ))}
           </motion.div>
         </motion.div>
-      </div>
+      </Container>
     </section>
   );
 };
