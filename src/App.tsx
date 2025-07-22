@@ -8,6 +8,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import LandingCover from "@/components/LandingCover";
+import AdminLogin from "@/components/admin/AdminLogin";
+import AdminDashboard from "@/components/admin/AdminDashboard";
+import AdminRoute from "@/components/admin/AdminRoute";
 
 const queryClient = new QueryClient();
 
@@ -24,16 +27,24 @@ const App = () => {
     }, 1000); // Match this with the exit animation duration
   };
 
+  // Skip landing page for admin routes
+  useEffect(() => {
+    if (window.location.pathname.startsWith("/admin")) {
+      setShowLanding(false);
+      setShowMainContent(true);
+    }
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <AnimatePresence mode="wait">
-          {showLanding && (
+          {showLanding && !window.location.pathname.startsWith("/admin") && (
             <LandingCover key="landing" onEnter={handleEnterWebsite} />
           )}
         </AnimatePresence>
         
-        {/* Main content only renders after clicking enter */}
+        {/* Main content only renders after clicking enter or for admin routes */}
         {showMainContent && (
           <motion.div
             key="main-content"
@@ -46,6 +57,15 @@ const App = () => {
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/admin" element={<AdminLogin />} />
+                <Route
+                  path="/admin/dashboard"
+                  element={
+                    <AdminRoute>
+                      <AdminDashboard />
+                    </AdminRoute>
+                  }
+                />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>

@@ -1,56 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { AnimatedText } from "@/components/animations/ScrollAnimations";
+import { Container } from "@/components/ui/container";
 
-interface JobOpening {
+interface Job {
+  id: string;
   title: string;
   description: string;
   requirements: string[];
   experience: string;
+  jdFile?: File | null;
+  jdText?: string;
 }
 
-const jobOpenings: JobOpening[] = [
-  {
-    title: "Senior Full Stack Developer",
-    description: "We're looking for an experienced Full Stack Developer to join our dynamic team. You'll be working on cutting-edge projects using modern technologies.",
-    requirements: [
-      "Strong experience with React, Node.js, and TypeScript",
-      "Experience with cloud platforms (AWS/Azure)",
-      "Knowledge of microservices architecture",
-      "Strong problem-solving skills"
-    ],
-    experience: "5+ years"
-  },
-  {
-    title: "DevOps Engineer",
-    description: "Join us as a DevOps Engineer to help build and maintain our cloud infrastructure and deployment pipelines.",
-    requirements: [
-      "Experience with Docker and Kubernetes",
-      "Strong knowledge of CI/CD practices",
-      "AWS/Azure certification preferred",
-      "Infrastructure as Code experience"
-    ],
-    experience: "3+ years"
-  },
-  {
-    title: "UI/UX Designer",
-    description: "We're seeking a creative UI/UX Designer to help create beautiful and intuitive user experiences for our products.",
-    requirements: [
-      "Strong portfolio demonstrating UI/UX projects",
-      "Proficiency in Figma/Adobe XD",
-      "Understanding of user-centered design principles",
-      "Experience with design systems"
-    ],
-    experience: "2+ years"
-  }
-];
-
 const Careers = () => {
-  const [selectedJob, setSelectedJob] = useState<JobOpening | null>(null);
+  const [jobs, setJobs] = useState<Job[]>([]);
+
+  useEffect(() => {
+    // Load jobs from localStorage
+    const savedJobs = localStorage.getItem("jobs");
+    if (savedJobs) {
+      setJobs(JSON.parse(savedJobs));
+    }
+  }, []);
 
   return (
     <section id="careers" className="py-20 bg-gradient-to-b from-background to-background/80">
-      <div className="container mx-auto px-4">
+      <Container>
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-800 mb-4">
             <AnimatedText text="Join Our Team" className="inline-block" />
@@ -61,23 +37,25 @@ const Careers = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {jobOpenings.map((job, index) => (
+          {jobs.map((job) => (
             <div
-              key={index}
-              className="bg-card rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-border/50 hover:border-accent/50 cursor-pointer"
-              onClick={() => setSelectedJob(job)}
+              key={job.id}
+              className="bg-card rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-border/50 hover:border-accent/50"
             >
               <h3 className="text-xl font-semibold mb-3 text-gray-800">{job.title}</h3>
-              <p className="text-gray-600 mb-4">{job.description}</p>
-              <div className="flex items-center gap-2 text-sm text-accent">
+              <div className="flex items-center gap-2 text-sm text-accent mb-4">
                 <span className="font-medium">Experience:</span>
                 <span>{job.experience}</span>
               </div>
+              {job.jdText && (
+                <div className="mb-4">
+                  <p className="text-gray-600 line-clamp-4">{job.jdText}</p>
+                </div>
+              )}
               <Button
                 variant="outline"
-                className="mt-4 w-full hover:bg-accent hover:text-accent-foreground"
-                onClick={(e) => {
-                  e.stopPropagation();
+                className="w-full hover:bg-accent hover:text-accent-foreground"
+                onClick={() => {
                   const contactSection = document.getElementById('contact');
                   if (contactSection) {
                     contactSection.scrollIntoView({ behavior: 'smooth' });
@@ -92,52 +70,12 @@ const Careers = () => {
           ))}
         </div>
 
-        {selectedJob && (
-          <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-card rounded-xl p-8 max-w-2xl w-full shadow-2xl border border-border relative">
-              <button
-                className="absolute top-4 right-4 text-muted-foreground hover:text-foreground"
-                onClick={() => setSelectedJob(null)}
-              >
-                ✕
-              </button>
-              <h3 className="text-2xl font-bold mb-4 text-primary">{selectedJob.title}</h3>
-              <p className="text-muted-foreground mb-6">{selectedJob.description}</p>
-              <div className="mb-6">
-                <h4 className="font-semibold mb-2 text-accent">Requirements:</h4>
-                <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                  {selectedJob.requirements.map((req, index) => (
-                    <li key={index}>{req}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex items-center gap-4">
-                <Button
-                  variant="default"
-                  className="w-full"
-                  onClick={() => {
-                    const contactSection = document.getElementById('contact');
-                    if (contactSection) {
-                      contactSection.scrollIntoView({ behavior: 'smooth' });
-                      window.history.pushState({}, '', `#contact?job=${encodeURIComponent(selectedJob.title)}`);
-                      setSelectedJob(null);
-                    }
-                  }}
-                >
-                  Apply Now
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => setSelectedJob(null)}
-                >
-                  Close
-                </Button>
-              </div>
-            </div>
+        {jobs.length === 0 && (
+          <div className="text-center text-muted-foreground py-12">
+            <p>No job openings available at the moment. Please check back later.</p>
           </div>
         )}
-      </div>
+      </Container>
     </section>
   );
 };

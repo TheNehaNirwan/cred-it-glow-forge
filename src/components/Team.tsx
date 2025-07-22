@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useScrollAnimation } from "@/components/animations/ScrollAnimations";
 import { motion } from "framer-motion";
+import { Container } from "@/components/ui/container";
 
 const Team = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -65,7 +66,7 @@ const Team = () => {
         <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-secondary opacity-10 rounded-full blur-3xl floating-element" style={{ animationDelay: '1s' }}></div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <Container>
         {/* Section Header */}
         <motion.div 
           className="text-center mb-16"
@@ -177,7 +178,7 @@ const Team = () => {
             <div className="text-muted-foreground text-sm">Support Available</div>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

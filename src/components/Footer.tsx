@@ -1,10 +1,11 @@
 import { Phone, Mail, MapPin } from "lucide-react";
+import { Container } from "@/components/ui/container";
 
 const Footer = () => {
   return (
     <footer className="bg-navy text-navy-foreground">
       {/* Main Footer */}
-      <div className="container mx-auto px-4 py-16">
+      <Container className="py-16">
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-12">
           {/* Company Info */}
           <div className="lg:col-span-2">
@@ -98,11 +99,11 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-      </div>
+      </Container>
 
       {/* Bottom Bar */}
       <div className="border-t border-navy-foreground/20">
-        <div className="container mx-auto px-4 py-6">
+        <Container className="py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-navy-foreground/60 text-sm">
               © 2024 CREDIBLE IT SOLUTIONS. All rights reserved.
@@ -119,7 +120,7 @@ const Footer = () => {
               </a>
             </div>
           </div>
-        </div>
+        </Container>
       </div>
     </footer>
   );

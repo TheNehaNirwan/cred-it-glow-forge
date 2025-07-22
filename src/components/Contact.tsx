@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Phone, Mail, MapPin, Clock, Send, Facebook, Instagram } from "lucide-react";
+import { Container } from "@/components/ui/container";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -108,7 +109,7 @@ Message: ${formData.message}
 
   return (
     <section id="contact" className="py-20 bg-background">
-      <div className="container mx-auto px-4">
+      <Container>
         {/* Section Header */}
         <div className="text-center mb-16 animate-fade-in">
           <div className="inline-flex items-center px-4 py-2 bg-accent/10 rounded-full mb-6">
@@ -320,7 +321,7 @@ Message: ${formData.message}
             </Button>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 };
