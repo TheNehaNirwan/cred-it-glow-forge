@@ -11,7 +11,7 @@ const Footer = () => {
             <div className="flex items-center space-x-3 mb-6">
               <div className="relative">
                 <img
-                  src="/lovable-uploads/6731b8a1-697c-4526-975c-d7303829f190.png"
+                  src="/lovable-uploads/e9551c16-fe28-4398-8884-fdb0424048f9.png"
                   alt="CREDIBLE IT SOLUTIONS"
                   className="w-32 h-32 object-contain relative z-10"
                 />
