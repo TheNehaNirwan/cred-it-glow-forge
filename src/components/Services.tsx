@@ -88,11 +88,11 @@ const Services = () => {
   };
 
   return (
-    <section id="services" className="py-20 bg-background" ref={ref}>
-      <Container>
+    <section id="services" className="py-12 sm:py-16 md:py-20 bg-background px-4 sm:px-6" ref={ref}>
+      <Container className="max-w-7xl">
         {/* Section Header */}
         <motion.div 
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-14 md:mb-16"
           style={{
             transform: isInView ? "none" : "translateY(50px)",
             opacity: isInView ? 1 : 0,
@@ -100,7 +100,7 @@ const Services = () => {
           }}
         >
           <motion.h2 
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4"
             initial={{ opacity: 0, scale: 0.5 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -109,7 +109,7 @@ const Services = () => {
             Our <span className="font-serif italic text-primary">Services</span>
           </motion.h2>
           <motion.p 
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
+            className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -118,9 +118,9 @@ const Services = () => {
             What Solutions We Provide
           </motion.p>
           <motion.div 
-            className="w-24 h-1 bg-gradient-primary mx-auto mt-6"
+            className="w-16 sm:w-20 md:w-24 h-1 bg-gradient-primary mx-auto mt-4 sm:mt-6"
             initial={{ width: 0 }}
-            whileInView={{ width: 96 }}
+            whileInView={{ width: "100%" }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.6 }}
           ></motion.div>
@@ -128,7 +128,7 @@ const Services = () => {
 
         {/* Services Grid */}
         <motion.div 
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-14 md:mb-16"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -159,10 +159,10 @@ const Services = () => {
                 }}
               />
               
-              <Card className="relative bg-background/80 backdrop-blur-sm border-2 group-hover:border-transparent transition-all duration-300">
-                <CardHeader className="text-center pb-4">
+              <Card className="relative bg-background/80 backdrop-blur-sm border-2 group-hover:border-transparent transition-all duration-300 h-full">
+                <CardHeader className="text-center pb-3 sm:pb-4">
                   <motion.div 
-                    className={`w-16 h-16 ${service.bgColor} rounded-full flex items-center justify-center mx-auto mb-4 relative overflow-hidden`}
+                    className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 ${service.bgColor} rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 relative overflow-hidden`}
                     whileHover={{ scale: 1.2, rotate: 360 }}
                     transition={{ duration: 0.6 }}
                   >
@@ -178,20 +178,20 @@ const Services = () => {
                         ease: "linear",
                       }}
                     />
-                    <service.icon className={`h-8 w-8 ${service.color} relative z-10`} />
+                    <service.icon className={`h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 ${service.color} relative z-10`} />
                   </motion.div>
-                  <CardTitle className={`text-xl group-hover:${service.color} transition-colors duration-300`}>
+                  <CardTitle className={`text-lg sm:text-xl group-hover:${service.color} transition-colors duration-300`}>
                     {service.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 leading-relaxed mb-6">
+                <CardContent className="flex-1 flex flex-col">
+                  <p className="text-gray-600 leading-relaxed mb-4 sm:mb-6 flex-1 text-sm sm:text-base">
                     {service.description}
                   </p>
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Button 
                       variant="ghost" 
-                      className={`w-full group-hover:bg-gradient-to-r ${service.gradient} group-hover:text-white transition-all duration-300 ${service.color}`}
+                      className={`w-full group-hover:bg-gradient-to-r ${service.gradient} group-hover:text-white transition-all duration-300 ${service.color} text-sm sm:text-base`}
                       onClick={() => {
                         const contactSection = document.getElementById('contact');
                         if (contactSection) {
@@ -202,7 +202,7 @@ const Services = () => {
                       }}
                     >
                       Learn More
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
+                      <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
                     </Button>
                   </motion.div>
                 </CardContent>
@@ -213,7 +213,7 @@ const Services = () => {
 
         {/* Process Section */}
         <motion.div 
-          className="bg-muted/30 rounded-3xl p-8 md:p-12 relative overflow-hidden"
+          className="bg-muted/30 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 relative overflow-hidden"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -234,22 +234,22 @@ const Services = () => {
           />
           
           <motion.div 
-            className="text-center mb-12 relative z-10"
+            className="text-center mb-8 sm:mb-10 md:mb-12 relative z-10"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h3 className="text-3xl font-bold mb-4">
+            <h3 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">
               Our <span className="font-serif italic text-primary">Development Process</span>
             </h3>
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-sm sm:text-base px-4">
               We follow a proven methodology to ensure successful project delivery
             </p>
           </motion.div>
 
           <motion.div 
-            className="grid md:grid-cols-4 gap-6 relative z-10"
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 relative z-10"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -267,9 +267,9 @@ const Services = () => {
                 variants={itemVariants}
                 whileHover={{ scale: 1.1 }}
               >
-                <div className="relative mb-6">
+                <div className="relative mb-4 sm:mb-6">
                   <motion.div 
-                    className="w-16 h-16 bg-gradient-primary text-white rounded-full flex items-center justify-center mx-auto font-bold text-lg relative overflow-hidden"
+                    className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-primary text-white rounded-full flex items-center justify-center mx-auto font-bold text-sm sm:text-base md:text-lg relative overflow-hidden"
                     whileHover={{ scale: 1.2, rotate: 360 }}
                     transition={{ duration: 0.6 }}
                   >
@@ -289,7 +289,7 @@ const Services = () => {
                   </motion.div>
                   {index < 3 && (
                     <motion.div 
-                      className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-primary to-secondary"
+                      className="hidden md:block absolute top-6 sm:top-7 md:top-8 left-full w-full h-0.5 bg-gradient-to-r from-primary to-secondary"
                       initial={{ scaleX: 0 }}
                       whileInView={{ scaleX: 1 }}
                       viewport={{ once: true }}
@@ -297,10 +297,10 @@ const Services = () => {
                     ></motion.div>
                   )}
                 </div>
-                <h4 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors duration-300">
+                <h4 className="font-bold text-base sm:text-lg mb-1 sm:mb-2 group-hover:text-primary transition-colors duration-300">
                   {process.title}
                 </h4>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 text-xs sm:text-sm text-center px-2">
                   {process.desc}
                 </p>
               </motion.div>

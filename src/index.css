@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global mobile optimizations */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Better mobile touch targets */
+  button, a {
+    min-height: 44px;
+  }
+}
+
 /* CRED IT SOLUTIONS Design System - Vibrant & Modern */
 
 @layer base {
