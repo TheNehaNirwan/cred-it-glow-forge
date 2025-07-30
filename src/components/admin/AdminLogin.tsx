@@ -6,29 +6,34 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { useToast } from "@/components/ui/use-toast";
 import { Eye, EyeOff } from "lucide-react";
+import { api } from "@/lib/api";
 
 const AdminLogin = () => {
   const [credentials, setCredentials] = useState({ username: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // This is a simple check - in a real app, you'd want to use proper authentication
-    if (credentials.username === "admin" && credentials.password === "admin123") {
-      localStorage.setItem("isAdminAuthenticated", "true");
+    setIsLoading(true);
+
+    try {
+      await api.login(credentials.username, credentials.password);
       toast({
         title: "Login Successful",
         description: "Welcome to the admin dashboard",
       });
       navigate("/admin/dashboard");
-    } else {
+    } catch (error) {
       toast({
         title: "Login Failed",
         description: "Invalid credentials",
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -47,6 +52,7 @@ const AdminLogin = () => {
                 value={credentials.username}
                 onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
                 required
+                disabled={isLoading}
               />
             </div>
             <div>
@@ -57,11 +63,13 @@ const AdminLogin = () => {
                   value={credentials.password}
                   onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                   required
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
                   onClick={() => setShowPassword(!showPassword)}
+                  disabled={isLoading}
                 >
                   {showPassword ? (
                     <EyeOff className="h-4 w-4" />
@@ -71,7 +79,9 @@ const AdminLogin = () => {
                 </button>
               </div>
             </div>
-            <Button type="submit" className="w-full">Login</Button>
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? "Logging in..." : "Login"}
+            </Button>
           </form>
         </CardContent>
       </Card>

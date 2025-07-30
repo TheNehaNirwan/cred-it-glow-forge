@@ -2,20 +2,21 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { Plus, Edit, Trash, LogOut, Eye } from "lucide-react";
+import { Plus, Edit, Trash, LogOut, Eye, Upload } from "lucide-react";
+import { api } from "@/lib/api";
 
 interface Job {
   id: string;
   title: string;
   description: string;
-  requirements: string[];
-  experience: string;
-  jdFile?: File | null;
-  jdText?: string;
+  department: string;
+  location: string;
+  status: string;
+  jd_file?: File;
 }
 
 interface JobFormProps {
@@ -27,6 +28,8 @@ interface JobFormProps {
 
 const JobForm = ({ job, isEditing, onSave, onCancel }: JobFormProps) => {
   const [formData, setFormData] = useState<Job>(job);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -34,7 +37,7 @@ const JobForm = ({ job, isEditing, onSave, onCancel }: JobFormProps) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -43,23 +46,38 @@ const JobForm = ({ job, isEditing, onSave, onCancel }: JobFormProps) => {
     if (file) {
       setFormData((prev) => ({
         ...prev,
-        jdFile: file
+        jd_file: file,
       }));
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(formData);
+    setIsLoading(true);
+
+    try {
+      const jobFormData = api.prepareJobFormData(formData);
+      if (isEditing) {
+        await api.updateJob(job.id, jobFormData);
+      } else {
+        await api.createJob(jobFormData);
+      }
+      onSave(formData);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: `Failed to ${isEditing ? "update" : "create"} job`,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <Card className="mb-6">
-      <CardHeader>
-        <CardTitle>{isEditing ? "Edit Job Posting" : "Create New Job Posting"}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+      <CardContent className="pt-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium mb-2">Job Title *</label>
             <Input
@@ -72,49 +90,67 @@ const JobForm = ({ job, isEditing, onSave, onCancel }: JobFormProps) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Experience Required *</label>
+            <label className="block text-sm font-medium mb-2">Department *</label>
             <Input
-              name="experience"
-              value={formData.experience}
+              name="department"
+              value={formData.department}
               onChange={handleInputChange}
-              placeholder="e.g., 3+ years"
+              placeholder="e.g., Engineering"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Location *</label>
+            <Input
+              name="location"
+              value={formData.location}
+              onChange={handleInputChange}
+              placeholder="e.g., Mumbai"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Description *</label>
+            <Textarea
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              placeholder="Enter job description"
+              className="min-h-[150px]"
               required
             />
           </div>
 
           <div>
             <label className="block text-sm font-medium mb-2">
-              Job Description (Upload JD)
+              Job Description File (PDF, DOC, DOCX)
             </label>
             <Input
               type="file"
               onChange={handleFileChange}
               accept=".pdf,.doc,.docx"
+              className="hidden"
+              id="jd-upload"
             />
-            <p className="text-sm text-muted-foreground mt-1">
-              Accepted formats: PDF, DOC, DOCX
-            </p>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              Or Paste Job Description
-            </label>
-            <Textarea
-              name="jdText"
-              value={formData.jdText}
-              onChange={handleInputChange}
-              placeholder="Paste job description here..."
-              className="min-h-[200px]"
-            />
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => document.getElementById('jd-upload')?.click()}
+              className="w-full py-8 flex flex-col items-center justify-center gap-2"
+            >
+              <Upload className="w-5 h-5" />
+              <span>{formData.jd_file ? formData.jd_file.name : "Click to upload JD file"}</span>
+            </Button>
           </div>
 
           <div className="flex justify-end gap-4">
             <Button type="button" variant="outline" onClick={onCancel}>
               Cancel
             </Button>
-            <Button type="submit">
-              {isEditing ? "Update" : "Create"} Job
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? `${isEditing ? "Updating..." : "Creating..."}` : (isEditing ? "Update" : "Create")} Job
             </Button>
           </div>
         </form>
@@ -129,86 +165,83 @@ const AdminDashboard = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [editingJob, setEditingJob] = useState<Job | null>(null);
   const [isCreating, setIsCreating] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const emptyJob: Job = {
     id: "",
     title: "",
     description: "",
-    requirements: [],
-    experience: "",
-    jdFile: null,
-    jdText: "",
+    department: "",
+    location: "",
+    status: "open",
   };
 
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem("isAdminAuthenticated");
-    if (!isAuthenticated) {
+    const token = localStorage.getItem('token');
+    if (!token) {
       navigate("/admin");
+      return;
     }
 
-    // Load jobs from localStorage
-    const savedJobs = localStorage.getItem("jobs");
-    if (savedJobs) {
-      setJobs(JSON.parse(savedJobs));
-    }
+    loadJobs();
   }, [navigate]);
 
+  const loadJobs = async () => {
+    try {
+      const fetchedJobs = await api.getJobs();
+      setJobs(fetchedJobs);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to load jobs",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleLogout = () => {
-    localStorage.removeItem("isAdminAuthenticated");
+    localStorage.removeItem('token');
     navigate("/admin");
   };
 
-  const validateJob = (job: Job): boolean => {
-    if (!job.title || !job.experience) {
-      toast({
-        title: "Validation Error",
-        description: "Title and experience are required fields",
-        variant: "destructive",
-      });
-      return false;
-    }
-
-    if (!job.jdFile && !job.jdText) {
-      toast({
-        title: "Validation Error",
-        description: "Either JD file or JD text is required",
-        variant: "destructive",
-      });
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleSave = (jobData: Job) => {
-    if (!validateJob(jobData)) return;
-
-    const isEditing = Boolean(jobData.id);
-    const updatedJobs = isEditing
-      ? jobs.map((job) => (job.id === jobData.id ? jobData : job))
-      : [...jobs, { ...jobData, id: Date.now().toString() }];
-
-    setJobs(updatedJobs);
-    localStorage.setItem("jobs", JSON.stringify(updatedJobs));
-
-    toast({
-      title: isEditing ? "Job Updated" : "Job Created",
-      description: `Successfully ${isEditing ? "updated" : "created"} job posting`,
-    });
-
+  const handleSave = async (jobData: Job) => {
+    await loadJobs(); // Reload jobs after save
     setEditingJob(null);
     setIsCreating(false);
-  };
-
-  const handleDelete = (id: string) => {
-    const updatedJobs = jobs.filter((job) => job.id !== id);
-    setJobs(updatedJobs);
-    localStorage.setItem("jobs", JSON.stringify(updatedJobs));
     toast({
-      title: "Job Deleted",
-      description: "Successfully deleted job posting",
+      title: "Success",
+      description: `Job ${jobData.id ? "updated" : "created"} successfully`,
     });
   };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await api.deleteJob(id);
+      await loadJobs(); // Reload jobs after delete
+      toast({
+        title: "Success",
+        description: "Job deleted successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete job",
+        variant: "destructive",
+      });
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <Container className="py-8">
+        <div className="flex justify-center items-center min-h-[60vh]">
+          <p className="text-lg text-muted-foreground">Loading...</p>
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <Container className="py-8">
@@ -261,20 +294,11 @@ const AdminDashboard = () => {
               <div className="flex justify-between items-start">
                 <div>
                   <h3 className="text-xl font-semibold mb-2">{job.title}</h3>
-                  <p className="text-muted-foreground">Experience: {job.experience}</p>
-                  {job.jdFile && (
-                    <p className="text-sm text-muted-foreground mt-1">
-                      JD File: {job.jdFile.name}
-                    </p>
-                  )}
-                  {job.jdText && (
-                    <div className="mt-4">
-                      <h4 className="font-medium mb-2">Job Description:</h4>
-                      <p className="text-muted-foreground whitespace-pre-wrap">
-                        {job.jdText}
-                      </p>
-                    </div>
-                  )}
+                  <div className="space-y-2">
+                    <p className="text-muted-foreground">Department: {job.department}</p>
+                    <p className="text-muted-foreground">Location: {job.location}</p>
+                    <p className="text-muted-foreground mt-4">{job.description}</p>
+                  </div>
                 </div>
                 <div className="flex gap-2">
                   <Button
