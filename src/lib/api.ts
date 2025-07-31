@@ -1,4 +1,5 @@
-const API_BASE_URL = '/api';
+const API_BASE_URL = 'https://api.credibleitsoultions.com';
+
 interface LoginResponse {
   access: string;
   refresh: string;
@@ -15,8 +16,9 @@ interface Job {
 }
 
 export const api = {
-  // Auth
-  login: async (username: string, password: string): Promise<LoginResponse> => {
+  // ✅ LOGIN
+ login: async (username: string, password: string): Promise<LoginResponse> => {
+  try {
     const response = await fetch(`${API_BASE_URL}/auth/login/`, {
       method: 'POST',
       headers: {
@@ -25,41 +27,55 @@ export const api = {
       body: JSON.stringify({ username, password }),
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      throw new Error('Login failed');
+      console.error('Login Error:', data);
+      throw new Error(data?.detail || 'Login failed');
     }
 
-    const data = await response.json();
-    // Store the token
-    localStorage.setItem('token', data.access);
+    console.log('Login Success:', data);
+
+    // ✅ Corrected token field name
+    if (data.access_token) {
+      localStorage.setItem('token', data.access_token);
+    } else {
+      console.warn('Access token not found in login response');
+    }
+
     return data;
+  } catch (error) {
+    console.error('Login Exception:', error);
+    throw error;
+  }
+},
+
+  // ✅ GET JOBS
+  getJobs: async (): Promise<Job[]> => {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('No token found');
+
+    const response = await fetch(`${API_BASE_URL}/company_site/jobs/`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Get Jobs Failed:', response.status, errorText);
+      throw new Error('Failed to fetch jobs');
+    }
+
+    return response.json();
   },
 
-  // Jobs
-getJobs: async (): Promise<Job[]> => {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    throw new Error('No token found in localStorage');
-  }
-
-  const response = await fetch(`${API_BASE_URL}/company_site/job-applications/`, {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    const text = await response.text();
-    console.error('Failed to fetch jobs:', response.status, text);
-    throw new Error('Failed to fetch jobs');
-  }
-
-  return response.json();
-}
-,
-
+  // ✅ CREATE JOB
   createJob: async (jobData: FormData): Promise<Job> => {
     const token = localStorage.getItem('token');
+    if (!token) throw new Error('No token found');
+
     const response = await fetch(`${API_BASE_URL}/company_site/jobs/`, {
       method: 'POST',
       headers: {
@@ -69,14 +85,19 @@ getJobs: async (): Promise<Job[]> => {
     });
 
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Create Job Failed:', errorText);
       throw new Error('Failed to create job');
     }
 
     return response.json();
   },
 
+  // ✅ UPDATE JOB
   updateJob: async (id: string, jobData: FormData): Promise<Job> => {
     const token = localStorage.getItem('token');
+    if (!token) throw new Error('No token found');
+
     const response = await fetch(`${API_BASE_URL}/company_site/jobs/${id}/`, {
       method: 'PUT',
       headers: {
@@ -92,8 +113,11 @@ getJobs: async (): Promise<Job[]> => {
     return response.json();
   },
 
+  // ✅ DELETE JOB
   deleteJob: async (id: string): Promise<void> => {
     const token = localStorage.getItem('token');
+    if (!token) throw new Error('No token found');
+
     const response = await fetch(`${API_BASE_URL}/company_site/jobs/${id}/`, {
       method: 'DELETE',
       headers: {
@@ -106,7 +130,7 @@ getJobs: async (): Promise<Job[]> => {
     }
   },
 
-  // Helper function to prepare form data
+  // ✅ HELPER: PREPARE FORM DATA
   prepareJobFormData: (job: Partial<Job>): FormData => {
     const formData = new FormData();
     if (job.title) formData.append('title', job.title);
@@ -117,4 +141,4 @@ getJobs: async (): Promise<Job[]> => {
     if (job.jd_file) formData.append('jd_file', job.jd_file);
     return formData;
   }
-}; 
+};
