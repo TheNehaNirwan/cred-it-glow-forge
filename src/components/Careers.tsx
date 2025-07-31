@@ -9,6 +9,7 @@ import { X, Upload } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/lib/api";
 
+// Interface for Job details
 interface Job {
   id: string;
   title: string;
@@ -19,11 +20,21 @@ interface Job {
   jd_file?: File;
 }
 
+// Interface for Application Form Data, now including new fields
 interface ApplicationFormData {
   name: string;
   email: string;
   phone: string;
-  experience: string;
+  experience: string; // Corresponds to years_of_experience
+  current_ctc: string;
+  expected_ctc: string;
+  notice_period: string;
+  current_location: string;
+  preferred_work_location: string;
+  nationality: string;
+  educational_background: string;
+  skills_technologies: string;
+  availability_to_start: string; // Date string (YYYY-MM-DD)
   resume: File | null;
   coverLetter: string;
 }
@@ -33,56 +44,71 @@ const Careers = () => {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false); // New state for submission loading
   const [formData, setFormData] = useState<ApplicationFormData>({
     name: "",
     email: "",
     phone: "",
     experience: "",
+    current_ctc: "",
+    expected_ctc: "",
+    notice_period: "",
+    current_location: "",
+    preferred_work_location: "",
+    nationality: "",
+    educational_background: "",
+    skills_technologies: "",
+    availability_to_start: "",
     resume: null,
     coverLetter: "",
   });
 
+  // Effect to load jobs on component mount
   useEffect(() => {
     loadJobs();
   }, []);
 
+  // Effect to manage body overflow when job application popup is open
   useEffect(() => {
     if (selectedJob) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
+    // Cleanup function to reset overflow when component unmounts or selectedJob changes
     return () => {
       document.body.style.overflow = 'unset';
     };
   }, [selectedJob]);
 
+  // Function to load job listings from the API
   const loadJobs = async () => {
-  try {
-    // Check if token is present
-    let token = localStorage.getItem('token');
+    try {
+      // Check if token is present
+      let token = localStorage.getItem('token');
 
-    // If token is missing, perform login
-    if (!token) {
-      const loginResponse = await api.login('credible', 'credible@2025');
-      token = loginResponse.access;
-      // token is now stored in localStorage
+      // If token is missing, perform login
+      if (!token) {
+        const loginResponse = await api.login('credible', 'credible@2025');
+        token = loginResponse.access;
+        // token is now stored in localStorage by the api.login function
+      }
+
+      const fetchedJobs = await api.getJobs();
+      setJobs(fetchedJobs);
+    } catch (error) {
+      console.error("Failed to load jobs:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load job listings.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    const fetchedJobs = await api.getJobs();
-    setJobs(fetchedJobs);
-  } catch (error) {
-    console.error(error);
-    toast({
-      title: "Error",
-      description: "Failed to load job listings",
-      variant: "destructive",
-    });
-  } finally {
-    setIsLoading(false);
-  }
-};
-
+  // Handler for input changes in the form fields
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -93,13 +119,15 @@ const Careers = () => {
     }));
   };
 
+  // Handler for file input change (resume upload)
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 5 * 1024 * 1024) {
+      // Validate file size
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit
         toast({
           title: "File too large",
-          description: "Please upload a file smaller than 5MB",
+          description: "Please upload a file smaller than 5MB.",
           variant: "destructive",
         });
         return;
@@ -111,35 +139,87 @@ const Careers = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Handler for form submission
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.resume) {
       toast({
         title: "Resume Required",
-        description: "Please upload your resume",
+        description: "Please upload your resume.",
         variant: "destructive",
       });
       return;
     }
 
-    // Here you would typically send the form data to your backend
-    console.log('Application submitted:', { jobId: selectedJob?.id, ...formData });
-    
-    toast({
-      title: "Application Submitted",
-      description: "We'll get back to you soon!",
-    });
+    if (!selectedJob) {
+      toast({
+        title: "Error",
+        description: "No job selected for application.",
+        variant: "destructive",
+      });
+      return;
+    }
 
-    // Reset form and close popup
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      experience: "",
-      resume: null,
-      coverLetter: "",
-    });
-    setSelectedJob(null);
+    setIsSubmitting(true); // Set submitting state to true
+
+    try {
+      // Create FormData object to send to the API (for file uploads and other fields)
+      const formToSend = new FormData();
+      formToSend.append('job', selectedJob.id); // Associate application with job ID
+      formToSend.append('full_name', formData.name);
+      formToSend.append('email', formData.email);
+      formToSend.append('phone_number', formData.phone);
+      formToSend.append('years_of_experience', formData.experience);
+      formToSend.append('current_ctc', formData.current_ctc);
+      formToSend.append('expected_ctc', formData.expected_ctc);
+      formToSend.append('notice_period', formData.notice_period);
+      formToSend.append('current_location', formData.current_location);
+      formToSend.append('preferred_work_location', formData.preferred_work_location);
+      formToSend.append('nationality', formData.nationality);
+      formToSend.append('educational_background', formData.educational_background);
+      formToSend.append('skills_technologies', formData.skills_technologies);
+      formToSend.append('availability_to_start', formData.availability_to_start);
+      if (formData.resume) {
+        formToSend.append('resume', formData.resume);
+      }
+      formToSend.append('cover_letter', formData.coverLetter); // Assuming API expects 'cover_letter'
+
+      await api.submitApplication(formToSend); // Call the API to submit the application
+
+      toast({
+        title: "Application Submitted",
+        description: "Your application has been successfully submitted! We'll get back to you soon.",
+      });
+
+      // Reset form and close popup on successful submission
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        experience: "",
+        current_ctc: "",
+        expected_ctc: "",
+        notice_period: "",
+        current_location: "",
+        preferred_work_location: "",
+        nationality: "",
+        educational_background: "",
+        skills_technologies: "",
+        availability_to_start: "",
+        resume: null,
+        coverLetter: "",
+      });
+      setSelectedJob(null);
+    } catch (error) {
+      console.error("Application submission failed:", error);
+      toast({
+        title: "Submission Failed",
+        description: "There was an error submitting your application. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false); // Reset submitting state
+    }
   };
 
   return (
@@ -195,7 +275,7 @@ const Careers = () => {
 
         {/* Job Application Popup */}
         {selectedJob && (
-          <div 
+          <div
             className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 overflow-y-auto"
             style={{ height: '100vh' }}
           >
@@ -264,7 +344,7 @@ const Careers = () => {
                           value={formData.phone}
                           onChange={handleInputChange}
                           required
-                          placeholder="Enter your phone number"
+                          placeholder="e.g., +91-9876543210"
                         />
                       </div>
                       <div>
@@ -277,6 +357,112 @@ const Careers = () => {
                           required
                         />
                       </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Current CTC (in Lakhs/Annum) *</label>
+                        <Input
+                          type="text" // Keep as text to allow flexible input, convert to number on backend if needed
+                          name="current_ctc"
+                          value={formData.current_ctc}
+                          onChange={handleInputChange}
+                          placeholder="e.g., 4.3"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Expected CTC (in Lakhs/Annum) *</label>
+                        <Input
+                          type="text" // Keep as text
+                          name="expected_ctc"
+                          value={formData.expected_ctc}
+                          onChange={handleInputChange}
+                          placeholder="e.g., 5.0"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Notice Period *</label>
+                        <Input
+                          name="notice_period"
+                          value={formData.notice_period}
+                          onChange={handleInputChange}
+                          placeholder="e.g., 30 days, Immediate"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Current Location *</label>
+                        <Input
+                          name="current_location"
+                          value={formData.current_location}
+                          onChange={handleInputChange}
+                          placeholder="e.g., Bangalore"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Preferred Work Location *</label>
+                        <Input
+                          name="preferred_work_location"
+                          value={formData.preferred_work_location}
+                          onChange={handleInputChange}
+                          placeholder="e.g., Hybrid, Remote, On-site"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Nationality *</label>
+                        <Input
+                          name="nationality"
+                          value={formData.nationality}
+                          onChange={handleInputChange}
+                          placeholder="e.g., Indian"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Educational Background *</label>
+                      <Textarea
+                        name="educational_background"
+                        value={formData.educational_background}
+                        onChange={handleInputChange}
+                        placeholder="e.g., B.Tech in Computer Science from IIT Bombay"
+                        className="min-h-[80px] resize-y"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Skills & Technologies *</label>
+                      <Textarea
+                        name="skills_technologies"
+                        value={formData.skills_technologies}
+                        onChange={handleInputChange}
+                        placeholder="e.g., Python, Django, React, PostgreSQL, Docker"
+                        className="min-h-[100px] resize-y"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Availability to Start * (YYYY-MM-DD)</label>
+                      <Input
+                        type="date"
+                        name="availability_to_start"
+                        value={formData.availability_to_start}
+                        onChange={handleInputChange}
+                        required
+                      />
                     </div>
 
                     <div>
@@ -317,10 +503,12 @@ const Careers = () => {
 
                     {/* Form Actions */}
                     <div className="flex justify-end gap-4 pt-6 border-t border-border">
-                      <Button type="button" variant="outline" onClick={() => setSelectedJob(null)}>
+                      <Button type="button" variant="outline" onClick={() => setSelectedJob(null)} disabled={isSubmitting}>
                         Cancel
                       </Button>
-                      <Button type="submit">Submit Application</Button>
+                      <Button type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? "Submitting..." : "Submit Application"}
+                      </Button>
                     </div>
                   </form>
                 </CardContent>
@@ -333,4 +521,4 @@ const Careers = () => {
   );
 };
 
-export default Careers; 
+export default Careers;

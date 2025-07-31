@@ -129,6 +129,27 @@ export const api = {
       throw new Error('Failed to delete job');
     }
   },
+  submitApplication: async (form: FormData): Promise<unknown> => {
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("No token found");
+
+  const response = await fetch(`${API_BASE_URL}/company_site/job-applications-create/`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: form,
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error("Application failed:", errorText);
+    throw new Error("Failed to submit application");
+  }
+
+  return response.json();
+}
+,
 
   // ✅ HELPER: PREPARE FORM DATA
   prepareJobFormData: (job: Partial<Job>): FormData => {
