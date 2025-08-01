@@ -80,7 +80,7 @@ const FeedbackForm = () => {
       return (
         <Star
           key={index}
-          className={`w-8 h-8 cursor-pointer transition-all duration-200 ${
+          className={`w-5 h-5 cursor-pointer transition-all duration-200 ${
             isActive 
               ? "text-yellow-400 fill-yellow-400 scale-110" 
               : "text-gray-300 hover:text-yellow-200"
@@ -94,54 +94,47 @@ const FeedbackForm = () => {
   };
 
   return (
-    <div className="mt-12">
-      <Card className="border-0 shadow-elegant animate-fade-in">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-foreground text-center">
+    <div className="mt-8">
+      <Card className="border-0 shadow-elegant animate-fade-in h-fit">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg font-bold text-foreground">
             Share Your Experience
           </CardTitle>
-          <p className="text-muted-foreground text-center">
-            We'd love to hear about your experience with our services!
+          <p className="text-sm text-muted-foreground">
+            Rate our services
           </p>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <CardContent className="pt-0">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Your Name *
-              </label>
               <Input 
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                placeholder="Enter your name"
-                className="h-12"
+                placeholder="Your name"
+                className="h-10"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-4">
-                Rating *
-              </label>
-              <div className="flex justify-center gap-2 mb-2">
+              <div className="flex justify-center gap-1 mb-2">
                 {renderStars()}
               </div>
-              <p className="text-sm text-muted-foreground text-center">
-                {formData.rating > 0 && `${formData.rating} star${formData.rating > 1 ? 's' : ''}`}
-              </p>
+              {formData.rating > 0 && (
+                <p className="text-xs text-muted-foreground text-center">
+                  {formData.rating} star{formData.rating > 1 ? 's' : ''}
+                </p>
+              )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Your Feedback *
-              </label>
               <Textarea 
                 name="description"
                 value={formData.description}
                 onChange={handleInputChange}
-                placeholder="Tell us about your experience with our services..."
-                className="min-h-32 resize-none"
+                placeholder="Your feedback..."
+                className="min-h-20 resize-none text-sm"
                 required
               />
             </div>
@@ -149,12 +142,12 @@ const FeedbackForm = () => {
             <Button 
               type="submit"
               variant="hero" 
-              size="lg" 
-              className="w-full group animate-pulse-glow"
+              size="sm" 
+              className="w-full group"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Submitting..." : "Submit Feedback"}
-              <Send className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              {isSubmitting ? "Submitting..." : "Submit"}
+              <Send className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
           </form>
         </CardContent>
