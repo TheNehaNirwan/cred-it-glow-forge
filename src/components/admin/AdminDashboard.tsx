@@ -6,8 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { Plus, Edit, Trash, LogOut, Eye, Upload, FileText, User, X } from "lucide-react";
+import { Plus, Edit, Trash, LogOut, Eye, Upload, FileText, User, X, CheckCheck, MessageSquare, ListTodo, ThumbsUp, XCircle, Info, Ban, PhoneCall } from "lucide-react";
 import { api } from "@/lib/api";
+import { Checkbox } from "@/components/ui/checkbox";
+
+// Define the base URL for media files
+const API_MEDIA_BASE_URL = api.API_MEDIA_BASE_URL;
 
 interface Job {
   id: string;
@@ -38,6 +42,27 @@ interface JobApplication {
   resume: string; // Relative path like 'resumes/Comment_Compliance.pdf'
   cover_letter: string;
   applied_at: string; // Timestamp of application
+  status: string; // New: 'pending', 'shortlisted', 'rejected'
+  remark: string; // New: Remark from the admin
+}
+
+interface Feedback {
+  id: number;
+  name: string;
+  email: string;
+  text: string;
+  created_at: string;
+  status: 'pending' | 'approved' | 'rejected';
+}
+
+// New interface for Contact Request
+interface ContactRequest {
+  id: number;
+  full_name: string;
+  email: string;
+  phone_number: string;
+  message: string;
+  submitted_at: string;
 }
 
 interface JobFormProps {
@@ -186,15 +211,24 @@ const AdminDashboard = () => {
   const { toast } = useToast();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [applications, setApplications] = useState<JobApplication[]>([]);
+  const [shortlistedApplications, setShortlistedApplications] = useState<JobApplication[]>([]);
+  const [rejectedApplications, setRejectedApplications] = useState<JobApplication[]>([]);
+  const [feedbackList, setFeedbackList] = useState<Feedback[]>([]);
+  const [contactRequests, setContactRequests] = useState<ContactRequest[]>([]); // New state for contact requests
   const [editingJob, setEditingJob] = useState<Job | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [isLoadingJobs, setIsLoadingJobs] = useState(true);
   const [isLoadingApplications, setIsLoadingApplications] = useState(false);
-  const [activeTab, setActiveTab] = useState<"jobs" | "applications">("jobs");
+  const [isLoadingShortlisted, setIsLoadingShortlisted] = useState(false);
+  const [isLoadingRejected, setIsLoadingRejected] = useState(false);
+  const [isLoadingFeedback, setIsLoadingFeedback] = useState(false);
+  const [isLoadingContactRequests, setIsLoadingContactRequests] = useState(false); // New loading state
+  const [activeTab, setActiveTab] = useState<"jobs" | "applications" | "shortlisted" | "rejected" | "feedback" | "contact">("jobs");
   const [selectedApplication, setSelectedApplication] = useState<JobApplication | null>(null);
+  const [selectedApplicationsForBulkAction, setSelectedApplicationsForBulkAction] = useState<string[]>([]);
+  const [bulkActionRemark, setBulkActionRemark] = useState('');
+  const [selectedFeedbackForBulkAction, setSelectedFeedbackForBulkAction] = useState<number[]>([]);
 
-  // Define the base URL for media files
-  const API_MEDIA_BASE_URL = 'https://api.credibleitsoultions.com/';
 
   const emptyJob: Job = {
     id: "",
@@ -215,10 +249,22 @@ const AdminDashboard = () => {
     loadJobs();
   }, [navigate]);
 
-  // Effect to load applications when the "applications" tab is active
+  // Effect to load data based on active tab
   useEffect(() => {
     if (activeTab === "applications") {
       loadApplications();
+    }
+    if (activeTab === "shortlisted") {
+      loadApplicationsByStatus("shortlisted");
+    }
+    if (activeTab === "rejected") {
+      loadApplicationsByStatus("rejected");
+    }
+    if (activeTab === "feedback") {
+      loadFeedback();
+    }
+    if (activeTab === "contact") {
+      loadContactRequests();
     }
   }, [activeTab]);
 
@@ -269,6 +315,61 @@ const AdminDashboard = () => {
     }
   };
 
+  const loadApplicationsByStatus = async (status: string) => {
+    if (status === 'shortlisted') setIsLoadingShortlisted(true);
+    if (status === 'rejected') setIsLoadingRejected(true);
+
+    try {
+      const fetchedApplications = await api.getApplications(status);
+      if (status === 'shortlisted') setShortlistedApplications(fetchedApplications);
+      if (status === 'rejected') setRejectedApplications(fetchedApplications);
+    } catch (error) {
+      console.error(`Failed to load ${status} applications:`, error);
+      toast({
+        title: "Error",
+        description: `Failed to load ${status} job applications.`,
+        variant: "destructive",
+      });
+    } finally {
+      if (status === 'shortlisted') setIsLoadingShortlisted(false);
+      if (status === 'rejected') setIsLoadingRejected(false);
+    }
+  };
+
+  const loadFeedback = async () => {
+    setIsLoadingFeedback(true);
+    try {
+      const fetchedFeedback = await api.getFeedback();
+      setFeedbackList(fetchedFeedback);
+    } catch (error) {
+      console.error("Failed to load feedback:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load feedback entries.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoadingFeedback(false);
+    }
+  };
+
+  const loadContactRequests = async () => {
+    setIsLoadingContactRequests(true);
+    try {
+      const fetchedContactRequests = await api.getContactRequests();
+      setContactRequests(fetchedContactRequests);
+    } catch (error) {
+      console.error("Failed to load contact requests:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load contact requests.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoadingContactRequests(false);
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate("/admin");
@@ -302,9 +403,117 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleToggleApplicationSelection = (id: string) => {
+    setSelectedApplicationsForBulkAction((prev) =>
+      prev.includes(id) ? prev.filter((appId) => appId !== id) : [...prev, id]
+    );
+  };
+
+  const handleBulkStatusUpdate = async (status: string) => {
+    if (selectedApplicationsForBulkAction.length === 0) {
+      toast({
+        title: "Warning",
+        description: "Please select at least one application to update.",
+        variant: "default",
+      });
+      return;
+    }
+
+    try {
+      await api.bulkStatusUpdate(selectedApplicationsForBulkAction, status, bulkActionRemark);
+      toast({
+        title: "Success",
+        description: `Successfully updated ${selectedApplicationsForBulkAction.length} application(s) to ${status}.`,
+      });
+      // Reload the relevant data
+      await loadApplications();
+      await loadApplicationsByStatus("shortlisted");
+      await loadApplicationsByStatus("rejected");
+      setSelectedApplicationsForBulkAction([]);
+      setBulkActionRemark('');
+    } catch (error) {
+      console.error("Bulk status update failed:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update application statuses.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleToggleFeedbackSelection = (id: number) => {
+    setSelectedFeedbackForBulkAction((prev) =>
+      prev.includes(id) ? prev.filter((feedbackId) => feedbackId !== id) : [...prev, id]
+    );
+  };
+
+  const handleApproveSelectedFeedback = async () => {
+    if (selectedFeedbackForBulkAction.length === 0) {
+      toast({
+        title: "Warning",
+        description: "Please select at least one feedback to approve.",
+        variant: "default",
+      });
+      return;
+    }
+
+    try {
+      await api.approveFeedback(selectedFeedbackForBulkAction);
+      toast({
+        title: "Success",
+        description: `Successfully approved ${selectedFeedbackForBulkAction.length} feedback entries.`,
+      });
+      await loadFeedback();
+      setSelectedFeedbackForBulkAction([]);
+    } catch (error) {
+      console.error("Bulk feedback approval failed:", error);
+      toast({
+        title: "Error",
+        description: "Failed to approve feedback.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteFeedback = async (id: number) => {
+    try {
+      await api.deleteFeedback(id);
+      toast({
+        title: "Success",
+        description: "Feedback deleted successfully.",
+      });
+      await loadFeedback();
+    } catch (error) {
+      console.error("Failed to delete feedback:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete feedback.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  // New function to handle deleting a contact request
+  const handleDeleteContactRequest = async (id: number) => {
+    try {
+      await api.deleteContactRequest(id);
+      toast({
+        title: "Success",
+        description: "Contact request deleted successfully.",
+      });
+      await loadContactRequests();
+    } catch (error) {
+      console.error("Failed to delete contact request:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete contact request.",
+        variant: "destructive",
+      });
+    }
+  };
+
   // Helper to find job title by ID
   const getJobTitleById = (jobId: string) => {
-    // Ensure jobs are loaded before attempting to find a job title
     if (jobs.length === 0) {
       return "Loading Job Info...";
     }
@@ -316,7 +525,6 @@ const AdminDashboard = () => {
   const formatDate = (dateString: string) => {
     try {
       const date = new Date(dateString);
-      // Check if the date is valid
       if (isNaN(date.getTime())) {
         return "Invalid Date";
       }
@@ -362,20 +570,48 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      <div className="flex border-b border-border mb-6">
+      <div className="flex border-b border-border mb-6 overflow-x-auto">
         <Button
           variant={activeTab === "jobs" ? "default" : "ghost"}
           onClick={() => setActiveTab("jobs")}
-          className="rounded-b-none"
+          className="rounded-b-none whitespace-nowrap"
         >
           <FileText className="w-4 h-4 mr-2" /> Manage Jobs
         </Button>
         <Button
           variant={activeTab === "applications" ? "default" : "ghost"}
           onClick={() => setActiveTab("applications")}
-          className="rounded-b-none"
+          className="rounded-b-none whitespace-nowrap"
         >
           <User className="w-4 h-4 mr-2" /> View Applications
+        </Button>
+        <Button
+          variant={activeTab === "shortlisted" ? "default" : "ghost"}
+          onClick={() => setActiveTab("shortlisted")}
+          className="rounded-b-none whitespace-nowrap"
+        >
+          <CheckCheck className="w-4 h-4 mr-2" /> Shortlisted
+        </Button>
+        <Button
+          variant={activeTab === "rejected" ? "default" : "ghost"}
+          onClick={() => setActiveTab("rejected")}
+          className="rounded-b-none whitespace-nowrap"
+        >
+          <Ban className="w-4 h-4 mr-2" /> Rejected
+        </Button>
+        <Button
+          variant={activeTab === "feedback" ? "default" : "ghost"}
+          onClick={() => setActiveTab("feedback")}
+          className="rounded-b-none whitespace-nowrap"
+        >
+          <MessageSquare className="w-4 h-4 mr-2" /> Feedback
+        </Button>
+        <Button
+          variant={activeTab === "contact" ? "default" : "ghost"}
+          onClick={() => setActiveTab("contact")}
+          className="rounded-b-none whitespace-nowrap"
+        >
+          <PhoneCall className="w-4 h-4 mr-2" /> Contact Requests
         </Button>
       </div>
 
@@ -449,7 +685,30 @@ const AdminDashboard = () => {
 
       {activeTab === "applications" && (
         <>
-          <h2 className="text-2xl font-bold mb-6">Job Applications</h2>
+          <h2 className="text-2xl font-bold mb-6">Pending Job Applications</h2>
+          <div className="mb-6 space-y-4">
+            <div className="flex items-center gap-4">
+              <Input
+                placeholder="Add a remark for the bulk action (optional)"
+                value={bulkActionRemark}
+                onChange={(e) => setBulkActionRemark(e.target.value)}
+                className="flex-1"
+              />
+              <Button
+                onClick={() => handleBulkStatusUpdate('shortlisted')}
+                disabled={selectedApplicationsForBulkAction.length === 0}
+              >
+                Shortlist ({selectedApplicationsForBulkAction.length})
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => handleBulkStatusUpdate('rejected')}
+                disabled={selectedApplicationsForBulkAction.length === 0}
+              >
+                Reject ({selectedApplicationsForBulkAction.length})
+              </Button>
+            </div>
+          </div>
           {isLoadingApplications ? (
             <div className="flex justify-center items-center min-h-[40vh]">
               <p className="text-lg text-muted-foreground">Loading applications...</p>
@@ -462,8 +721,13 @@ const AdminDashboard = () => {
                 applications.map((application) => (
                   <Card key={application.id}>
                     <CardContent className="pt-6">
-                      <div className="flex justify-between items-start">
-                        <div>
+                      <div className="flex items-center justify-between gap-4">
+                        <Checkbox
+                          checked={selectedApplicationsForBulkAction.includes(application.id)}
+                          onCheckedChange={() => handleToggleApplicationSelection(application.id)}
+                          className="mr-2"
+                        />
+                        <div className="flex-1">
                           <h3 className="text-xl font-semibold mb-2">{application.full_name}</h3>
                           <div className="space-y-1 text-muted-foreground text-sm">
                             <p>Email: {application.email}</p>
@@ -484,76 +748,262 @@ const AdminDashboard = () => {
               )}
             </div>
           )}
+        </>
+      )}
 
-          {selectedApplication && (
-            <div
-              className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 overflow-y-auto"
-              style={{ height: '100vh' }}
-            >
-              <div className="min-h-screen p-4 flex items-start justify-center">
-                <Card className="w-full max-w-2xl my-8">
-                  <CardHeader className="border-b border-border p-6">
-                    <div className="flex justify-between items-center">
-                      <CardTitle className="text-2xl font-bold">Applicant Details</CardTitle>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setSelectedApplication(null)}
-                        className="text-muted-foreground hover:text-foreground"
-                      >
-                        <X className="h-5 w-5" />
-                      </Button>
-                    </div>
-                  </CardHeader>
-
-                  <CardContent className="p-6 space-y-4">
-                    <p><strong>Name:</strong> {selectedApplication.full_name}</p>
-                    <p><strong>Email:</strong> {selectedApplication.email}</p>
-                    <p><strong>Phone:</strong> {selectedApplication.phone_number}</p>
-                    <p><strong>Applied For Job:</strong> {getJobTitleById(selectedApplication.job)}</p>
-                    <p><strong>Years of Experience:</strong> {selectedApplication.years_of_experience}</p>
-                    <p><strong>Current CTC:</strong> {selectedApplication.current_ctc}</p>
-                    <p><strong>Expected CTC:</strong> {selectedApplication.expected_ctc}</p>
-                    <p><strong>Notice Period:</strong> {selectedApplication.notice_period}</p>
-                    <p><strong>Current Location:</strong> {selectedApplication.current_location}</p>
-                    <p><strong>Preferred Work Location:</strong> {selectedApplication.preferred_work_location}</p>
-                    <p><strong>Nationality:</strong> {selectedApplication.nationality}</p>
-                    <div>
-                      <strong>Educational Background:</strong>
-                      <p className="whitespace-pre-wrap">{selectedApplication.educational_background}</p>
-                    </div>
-                    <div>
-                      <strong>Skills & Technologies:</strong>
-                      <p className="whitespace-pre-wrap">{selectedApplication.skills_technologies}</p>
-                    </div>
-                    <p><strong>Availability to Start:</strong> {selectedApplication.availability_to_start}</p>
-                    <p><strong>Applied On:</strong> {formatDate(selectedApplication.applied_at)}</p>
-
-                    {selectedApplication.resume && (
-                      <div>
-                        <strong>Resume:</strong>{" "}
-                        <a
-                          href={`${API_MEDIA_BASE_URL}${selectedApplication.resume}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 hover:underline"
+      {activeTab === "shortlisted" && (
+        <>
+          <h2 className="text-2xl font-bold mb-6">Shortlisted Candidates</h2>
+          {isLoadingShortlisted ? (
+            <div className="flex justify-center items-center min-h-[40vh]">
+              <p className="text-lg text-muted-foreground">Loading shortlisted candidates...</p>
+            </div>
+          ) : (
+            <div className="grid gap-6">
+              {shortlistedApplications.length === 0 ? (
+                <p className="text-center text-muted-foreground py-8">No candidates have been shortlisted yet.</p>
+              ) : (
+                shortlistedApplications.map((application) => (
+                  <Card key={application.id}>
+                    <CardContent className="pt-6">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h3 className="text-xl font-semibold mb-2">{application.full_name}</h3>
+                          <div className="space-y-1 text-muted-foreground text-sm">
+                            <p>Email: {application.email}</p>
+                            <p>Applied for: {getJobTitleById(application.job)}</p>
+                            <p>Applied on: {formatDate(application.applied_at)}</p>
+                            {application.remark && <p className="text-green-600">Remark: {application.remark}</p>}
+                          </div>
+                        </div>
+                        <Button
+                          variant="outline"
+                          onClick={() => setSelectedApplication(application)}
                         >
-                          View Resume
-                        </a>
+                          <Eye className="w-4 h-4 mr-2" /> View Details
+                        </Button>
                       </div>
-                    )}
-                    {selectedApplication.cover_letter && (
-                      <div>
-                        <strong>Cover Letter:</strong>
-                        <p className="whitespace-pre-wrap">{selectedApplication.cover_letter}</p>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
             </div>
           )}
         </>
+      )}
+
+      {activeTab === "rejected" && (
+        <>
+          <h2 className="text-2xl font-bold mb-6">Rejected Candidates</h2>
+          {isLoadingRejected ? (
+            <div className="flex justify-center items-center min-h-[40vh]">
+              <p className="text-lg text-muted-foreground">Loading rejected candidates...</p>
+            </div>
+          ) : (
+            <div className="grid gap-6">
+              {rejectedApplications.length === 0 ? (
+                <p className="text-center text-muted-foreground py-8">No candidates have been rejected yet.</p>
+              ) : (
+                rejectedApplications.map((application) => (
+                  <Card key={application.id}>
+                    <CardContent className="pt-6">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h3 className="text-xl font-semibold mb-2">{application.full_name}</h3>
+                          <div className="space-y-1 text-muted-foreground text-sm">
+                            <p>Email: {application.email}</p>
+                            <p>Applied for: {getJobTitleById(application.job)}</p>
+                            <p>Applied on: {formatDate(application.applied_at)}</p>
+                            {application.remark && <p className="text-red-600">Remark: {application.remark}</p>}
+                          </div>
+                        </div>
+                        <Button
+                          variant="outline"
+                          onClick={() => setSelectedApplication(application)}
+                        >
+                          <Eye className="w-4 h-4 mr-2" /> View Details
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+          )}
+        </>
+      )}
+
+      {activeTab === "feedback" && (
+        <>
+          <h2 className="text-2xl font-bold mb-6">User Feedback</h2>
+          <div className="mb-6">
+            <Button
+              onClick={handleApproveSelectedFeedback}
+              disabled={selectedFeedbackForBulkAction.length === 0}
+            >
+              Approve Selected ({selectedFeedbackForBulkAction.length})
+            </Button>
+          </div>
+          {isLoadingFeedback ? (
+            <div className="flex justify-center items-center min-h-[40vh]">
+              <p className="text-lg text-muted-foreground">Loading feedback...</p>
+            </div>
+          ) : (
+            <div className="grid gap-6">
+              {feedbackList.length === 0 ? (
+                <p className="text-center text-muted-foreground py-8">No feedback has been submitted yet.</p>
+              ) : (
+                feedbackList.map((feedback) => (
+                  <Card key={feedback.id}>
+                    <CardContent className="pt-6">
+                      <div className="flex items-center justify-between gap-4">
+                        <Checkbox
+                          checked={selectedFeedbackForBulkAction.includes(feedback.id)}
+                          onCheckedChange={() => handleToggleFeedbackSelection(feedback.id)}
+                          className="mr-2"
+                        />
+                        <div className="flex-1">
+                          <h3 className="text-xl font-semibold mb-2">
+                            {feedback.name}
+                            <span className={`ml-4 text-sm font-normal px-2 py-1 rounded-full ${feedback.status === 'approved' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                              {feedback.status}
+                            </span>
+                          </h3>
+                          <div className="space-y-1 text-muted-foreground text-sm">
+                            <p>Email: {feedback.email}</p>
+                            <p>Submitted on: {formatDate(feedback.created_at)}</p>
+                            <p className="mt-4 text-foreground italic">"{feedback.text}"</p>
+                          </div>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleDeleteFeedback(feedback.id)}
+                        >
+                          <Trash className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+          )}
+        </>
+      )}
+
+      {activeTab === "contact" && (
+        <>
+          <h2 className="text-2xl font-bold mb-6">Contact Requests</h2>
+          {isLoadingContactRequests ? (
+            <div className="flex justify-center items-center min-h-[40vh]">
+              <p className="text-lg text-muted-foreground">Loading contact requests...</p>
+            </div>
+          ) : (
+            <div className="grid gap-6">
+              {contactRequests.length === 0 ? (
+                <p className="text-center text-muted-foreground py-8">No contact requests found.</p>
+              ) : (
+                contactRequests.map((request) => (
+                  <Card key={request.id}>
+                    <CardContent className="pt-6">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h3 className="text-xl font-semibold mb-2">{request.full_name}</h3>
+                          <div className="space-y-1 text-muted-foreground text-sm">
+                            <p>Email: {request.email}</p>
+                            <p>Phone: {request.phone_number}</p>
+                            <p>Submitted on: {formatDate(request.submitted_at)}</p>
+                            <p className="mt-4 text-foreground">Message: {request.message}</p>
+                          </div>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleDeleteContactRequest(request.id)}
+                        >
+                          <Trash className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+          )}
+        </>
+      )}
+
+
+      {selectedApplication && (
+        <div
+          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 overflow-y-auto"
+          style={{ height: '100vh' }}
+        >
+          <div className="min-h-screen p-4 flex items-start justify-center">
+            <Card className="w-full max-w-2xl my-8">
+              <CardHeader className="border-b border-border p-6">
+                <div className="flex justify-between items-center">
+                  <CardTitle className="text-2xl font-bold">Applicant Details</CardTitle>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setSelectedApplication(null)}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="h-5 w-5" />
+                  </Button>
+                </div>
+              </CardHeader>
+
+              <CardContent className="p-6 space-y-4">
+                <p><strong>Name:</strong> {selectedApplication.full_name}</p>
+                <p><strong>Email:</strong> {selectedApplication.email}</p>
+                <p><strong>Phone:</strong> {selectedApplication.phone_number}</p>
+                <p><strong>Applied For Job:</strong> {getJobTitleById(selectedApplication.job)}</p>
+                <p><strong>Years of Experience:</strong> {selectedApplication.years_of_experience}</p>
+                <p><strong>Current CTC:</strong> {selectedApplication.current_ctc}</p>
+                <p><strong>Expected CTC:</strong> {selectedApplication.expected_ctc}</p>
+                <p><strong>Notice Period:</strong> {selectedApplication.notice_period}</p>
+                <p><strong>Current Location:</strong> {selectedApplication.current_location}</p>
+                <p><strong>Preferred Work Location:</strong> {selectedApplication.preferred_work_location}</p>
+                <p><strong>Nationality:</strong> {selectedApplication.nationality}</p>
+                <div>
+                  <strong>Educational Background:</strong>
+                  <p className="whitespace-pre-wrap">{selectedApplication.educational_background}</p>
+                </div>
+                <div>
+                  <strong>Skills & Technologies:</strong>
+                  <p className="whitespace-pre-wrap">{selectedApplication.skills_technologies}</p>
+                </div>
+                <p><strong>Availability to Start:</strong> {selectedApplication.availability_to_start}</p>
+                <p><strong>Applied On:</strong> {formatDate(selectedApplication.applied_at)}</p>
+                <p><strong>Status:</strong> {selectedApplication.status}</p>
+                {selectedApplication.remark && <p><strong>Remark:</strong> {selectedApplication.remark}</p>}
+
+                {selectedApplication.resume && (
+                  <div>
+                    <strong>Resume:</strong>{" "}
+                    <a
+                      href={`${API_MEDIA_BASE_URL}${selectedApplication.resume}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline"
+                    >
+                      View Resume
+                    </a>
+                  </div>
+                )}
+                {selectedApplication.cover_letter && (
+                  <div>
+                    <strong>Cover Letter:</strong>
+                    <p className="whitespace-pre-wrap">{selectedApplication.cover_letter}</p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       )}
     </Container>
   );

@@ -14,10 +14,7 @@ const Hero = () => {
   const [typingSpeed, setTypingSpeed] = useState(150);
 
   const phrases = [
-    "through IT services",
-    "with innovative solutions",
-    "via digital transformation",
-    "using cutting-edge tech"
+    "through IT services",    
   ];
   const staticText = "Empowering your business ";
   
@@ -176,7 +173,7 @@ const Hero = () => {
         </div>
 
         {/* Animated Stats Section */}
-        <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mt-12 sm:mt-16 md:mt-20 transition-all duration-1000 delay-2000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        {/* <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mt-12 sm:mt-16 md:mt-20 transition-all duration-1000 delay-2000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="text-center scale-in">
             <div className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-1 sm:mb-2 animate-text-glow">
               500+
@@ -201,7 +198,7 @@ const Hero = () => {
             </div>
             <div className="text-navy-foreground/70 text-xs sm:text-sm md:text-base">Support Available</div>
           </div>
-        </div>
+        </div> */}
       </Container>
     </section>
   );

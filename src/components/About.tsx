@@ -15,8 +15,8 @@ const About = () => {
     return () => clearTimeout(timer);
   }, []);
   const stats = [
-    { number: "500+", label: "IT Professionals", icon: Users },
-    { number: "100+", label: "Successful Projects", icon: Target },
+    // { number: "500+", label: "IT Professionals", icon: Users },
+    // { number: "100+", label: "Successful Projects", icon: Target },
     { number: "95%", label: "Client Satisfaction", icon: Award },
     { number: "5+", label: "Years Experience", icon: CheckCircle }
   ];
@@ -95,9 +95,7 @@ const About = () => {
                 Contact Us Today
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
               </Button>
-              <Button variant="outline" size="lg" className="magnetic-hover">
-                View Our Portfolio
-              </Button>
+             
             </div>
           </div>
 

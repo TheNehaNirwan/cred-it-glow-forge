@@ -104,7 +104,8 @@ Message: ${formData.message}
       description: "See our latest updates and stories",
       gradient: "bg-gradient-accent",
       link: "https://instagram.com/credibleitsolutions"
-    }
+    },
+    
   ];
 
   return (

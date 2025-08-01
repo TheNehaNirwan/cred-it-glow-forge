@@ -1,4 +1,5 @@
 const API_BASE_URL = 'https://api.credibleitsoultions.com';
+const API_MEDIA_BASE_URL = 'https://api.credibleitsoultions.com/';
 
 interface LoginResponse {
   access: string;
@@ -15,7 +16,6 @@ interface Job {
   jd_file?: File;
 }
 
-// New interface for Job Application
 interface JobApplication {
   id: string;
   job: string; // Job ID
@@ -32,12 +32,34 @@ interface JobApplication {
   educational_background: string;
   skills_technologies: string;
   availability_to_start: string; // Date string (YYYY-MM-DD)
-  resume: string; // URL to the resume file (e.g., 'resumes/Comment_Compliance.pdf')
+  resume: string; // Relative path like 'resumes/Comment_Compliance.pdf'
   cover_letter: string;
-  applied_at: string; // Timestamp of application (e.g., "2025-07-31T12:00:00Z")
+  applied_at: string; // Timestamp of application
+  status: string; // New: 'pending', 'shortlisted', 'rejected'
+  remark: string; // New: Remark from the admin
+}
+
+interface Feedback {
+  id: number;
+  name: string;
+  email: string;
+  text: string;
+  created_at: string;
+  status: 'pending' | 'approved' | 'rejected';
+}
+
+// New interface for Contact Request
+interface ContactRequest {
+  id: number;
+  full_name: string;
+  email: string;
+  phone_number: string;
+  message: string;
+  submitted_at: string;
 }
 
 export const api = {
+  API_MEDIA_BASE_URL,
   // ✅ LOGIN
   login: async (username: string, password: string): Promise<LoginResponse> => {
     try {
@@ -188,12 +210,13 @@ export const api = {
     return response.json();
   },
 
-  // ✅ GET APPLICATIONS
-  getApplications: async (): Promise<JobApplication[]> => {
+  // ✅ GET APPLICATIONS BY STATUS
+  getApplications: async (status: string = ''): Promise<JobApplication[]> => {
     const token = localStorage.getItem('token');
     if (!token) throw new Error('No token found');
+    const statusQuery = status ? `?status=${status}` : '';
 
-    const response = await fetch(`${API_BASE_URL}/company_site/job-applications/`, {
+    const response = await fetch(`${API_BASE_URL}/company_site/job-applications/${statusQuery}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -202,15 +225,156 @@ export const api = {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Get Applications Failed:', response.status, errorText);
+      console.error(`Get Applications Failed for status '${status}':`, response.status, errorText);
       if (response.status === 401 || response.status === 403) {
         localStorage.removeItem('token');
         console.warn('Authentication failed for getApplications. Token might be expired or invalid.');
       }
-      throw new Error('Failed to fetch applications');
+      throw new Error(`Failed to fetch applications for status '${status}'`);
     }
 
     return response.json();
+  },
+
+  // ✅ BULK STATUS UPDATE FOR APPLICATIONS
+  bulkStatusUpdate: async (applicationIds: string[], status: string, remark: string = ''): Promise<unknown> => {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('No token found');
+
+    const response = await fetch(`${API_BASE_URL}/company_site/bulk-status-update/`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        application_ids: applicationIds,
+        status,
+        remark,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Bulk Status Update Failed:', errorText);
+      throw new Error('Failed to update application statuses');
+    }
+
+    return response.json();
+  },
+
+  // ✅ GET FEEDBACKS
+  getFeedback: async (): Promise<Feedback[]> => {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('No token found');
+
+    const response = await fetch(`${API_BASE_URL}/company_site/feedback/`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Get Feedback Failed:', response.status, errorText);
+      if (response.status === 401 || response.status === 403) {
+        localStorage.removeItem('token');
+        console.warn('Authentication failed for getFeedback. Token might be expired or invalid.');
+      }
+      throw new Error('Failed to fetch feedback');
+    }
+
+    return response.json();
+  },
+
+  // ✅ DELETE FEEDBACK
+  deleteFeedback: async (id: number): Promise<void> => {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('No token found');
+
+    const response = await fetch(`${API_BASE_URL}/company_site/feedback/${id}/`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Delete Feedback Failed:', errorText);
+      throw new Error('Failed to delete feedback');
+    }
+  },
+
+  // ✅ BULK APPROVE FEEDBACK
+  approveFeedback: async (ids: number[]): Promise<unknown> => {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('No token found');
+
+    const response = await fetch(`${API_BASE_URL}/company_site/feedback/`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        ids,
+        status: 'approved',
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Approve Feedback Failed:', errorText);
+      throw new Error('Failed to approve feedback');
+    }
+
+    return response.json();
+  },
+
+  // ✅ GET CONTACT REQUESTS
+  getContactRequests: async (): Promise<ContactRequest[]> => {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('No token found');
+
+    const response = await fetch(`${API_BASE_URL}/company_site/admin/contact-requests/`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Get Contact Requests Failed:', response.status, errorText);
+      if (response.status === 401 || response.status === 403) {
+        localStorage.removeItem('token');
+        console.warn('Authentication failed for getContactRequests. Token might be expired or invalid.');
+      }
+      throw new Error('Failed to fetch contact requests');
+    }
+
+    return response.json();
+  },
+
+  // ✅ DELETE CONTACT REQUEST
+  deleteContactRequest: async (id: number): Promise<void> => {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('No token found');
+
+    const response = await fetch(`${API_BASE_URL}/company_site/admin/contact-requests/${id}/`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Delete Contact Request Failed:', errorText);
+      throw new Error('Failed to delete contact request');
+    }
   },
 
   // ✅ HELPER: PREPARE FORM DATA

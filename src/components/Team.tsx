@@ -152,32 +152,7 @@ const Team = () => {
         </div>
 
         {/* Team Stats */}
-        <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-16 border-t border-border/30 transition-all duration-1000 delay-1200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="text-center scale-in">
-            <div className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2 animate-text-glow">
-              10+
-            </div>
-            <div className="text-muted-foreground text-sm">Years Experience</div>
-          </div>
-          <div className="text-center scale-in" style={{ animationDelay: '0.2s' }}>
-            <div className="text-3xl font-bold bg-gradient-secondary bg-clip-text text-transparent mb-2 animate-text-glow">
-              500+
-            </div>
-            <div className="text-muted-foreground text-sm">Projects Completed</div>
-          </div>
-          <div className="text-center scale-in" style={{ animationDelay: '0.4s' }}>
-            <div className="text-3xl font-bold bg-gradient-accent bg-clip-text text-transparent mb-2 animate-text-glow">
-              95%
-            </div>
-            <div className="text-muted-foreground text-sm">Client Satisfaction</div>
-          </div>
-          <div className="text-center scale-in" style={{ animationDelay: '0.6s' }}>
-            <div className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2 animate-text-glow">
-              24/7
-            </div>
-            <div className="text-muted-foreground text-sm">Support Available</div>
-          </div>
-        </div>
+  
       </Container>
     </section>
   );
