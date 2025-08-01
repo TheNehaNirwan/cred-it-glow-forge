@@ -58,6 +58,15 @@ interface ContactRequest {
   submitted_at: string;
 }
 
+// Interface for Testimonials
+interface Testimonial {
+  id: number;
+  name: string;
+  rating: number;
+  description: string;
+  created_at: string;
+}
+
 export const api = {
   API_MEDIA_BASE_URL,
   // ✅ LOGIN
@@ -375,6 +384,47 @@ export const api = {
       console.error('Delete Contact Request Failed:', errorText);
       throw new Error('Failed to delete contact request');
     }
+  },
+
+  // ✅ GET TESTIMONIALS
+  getTestimonials: async (): Promise<Testimonial[]> => {
+    const response = await fetch(`${API_BASE_URL}/company_site/user-feedback/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Get Testimonials Failed:', response.status, errorText);
+      throw new Error('Failed to fetch testimonials');
+    }
+
+    return response.json();
+  },
+
+  // ✅ SUBMIT TESTIMONIAL
+  submitTestimonial: async (name: string, rating: number, description: string): Promise<unknown> => {
+    const response = await fetch(`${API_BASE_URL}/company_site/user-feedback/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name,
+        rating,
+        description,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Submit Testimonial Failed:', errorText);
+      throw new Error('Failed to submit testimonial');
+    }
+
+    return response.json();
   },
 
   // ✅ HELPER: PREPARE FORM DATA

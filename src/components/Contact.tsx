@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Phone, Mail, MapPin, Clock, Send, Facebook, Instagram } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Send, Facebook, Instagram, MessageCircle } from "lucide-react";
 import { Container } from "@/components/ui/container";
+import FeedbackForm from "./FeedbackForm";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -60,6 +61,11 @@ Message: ${formData.message}
     window.location.href = `tel:${phone}`;
   };
 
+  const handleWhatsAppClick = (phone: string) => {
+    const message = encodeURIComponent("Hi! I'm interested in your IT services. Can we discuss?");
+    window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+  };
+
   const contactMethods = [
     {
       icon: Phone,
@@ -105,6 +111,13 @@ Message: ${formData.message}
       gradient: "bg-gradient-accent",
       link: "https://instagram.com/credibleitsolutions"
     },
+    {
+      icon: MessageCircle,
+      title: "WhatsApp",
+      details: "8433613966",
+      description: "Quick support via WhatsApp",
+      gradient: "bg-gradient-primary"
+    },
     
   ];
 
@@ -146,6 +159,8 @@ Message: ${formData.message}
                       handlePhoneClick(method.details);
                     } else if (method.icon === Mail) {
                       handleEmailClick(method.details);
+                    } else if (method.icon === MessageCircle) {
+                      handleWhatsAppClick('918433613966');
                     } else if (method.link) {
                       window.open(method.link, '_blank');
                     }
@@ -289,6 +304,9 @@ Message: ${formData.message}
                 </p>
               </CardContent>
             </Card>
+
+            {/* Feedback Form */}
+            <FeedbackForm />
           </div>
         </div>
 
