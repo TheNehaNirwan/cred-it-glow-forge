@@ -31,6 +31,10 @@ const About = () => {
       description: "Our comprehensive screening process guarantees that every professional we recommend meets the highest standards."
     },
     {
+      title: "HR Review Process",
+      description: "After initial screening, our experienced HR team conducts thorough interviews and background verification for final approval."
+    },
+    {
       title: "Client-Focused",
       description: "We tailor our services to match your specific requirements and organizational culture."
     },
@@ -128,11 +132,11 @@ const About = () => {
           <h3 className="text-3xl text-center mb-12">
             <span className="font-serif italic text-gray-800">Why Choose</span>{" "}
             <span className="bg-gradient-primary bg-clip-text text-transparent font-bold">
-              CRED IT SOLUTIONS
+              CREDIBLE-IT SOLUTIONS
             </span>
           </h3>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
             {values.map((value, index) => (
               <Card 
                 key={index} 
