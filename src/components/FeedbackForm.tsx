@@ -100,7 +100,7 @@ const FeedbackForm = () => {
           <CardTitle className="text-lg font-bold text-foreground">
             Share Your Experience
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm">
             Rate our services
           </p>
         </CardHeader>

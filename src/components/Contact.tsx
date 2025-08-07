@@ -136,7 +136,7 @@ Message: ${formData.message}
 </span>
 
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl max-w-3xl mx-auto leading-relaxed">
             Ready to transform your business with our IT solutions? Get in touch with us today 
             for a free consultation and discover how we can help you achieve your goals.
           </p>

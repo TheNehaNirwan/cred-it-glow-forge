@@ -74,28 +74,30 @@ const About = () => {
               Your Trusted Partner in IT Excellence
             </h3>
             
-            <div className={`prose prose-lg max-w-none text-muted-foreground mb-8 transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <p className="mb-6 leading-relaxed">
-                We are <strong className="text-gray-900">CREDIBLE-IT SOLUTIONS</strong>, a consultancy firm specializing in IT staffing solutions. 
-                Our expertise lies in providing top-notch IT professionals to organizations like yours, 
-                ensuring seamless project execution and operational efficiency.
-              </p>
-              
-              <p className="mb-6 leading-relaxed">
-                Our team can help you find the right talent for your IT needs, whether it's for short-term 
-                projects or long-term positions. We take pride in our rigorous screening process which involves 
-                use of AI with deep human evaluation, this ensures that only the most skilled and experienced 
-                professionals are recommended to our clients.
-              </p>
-              
-              <p className="leading-relaxed">
-                If you're looking to augment your IT team or require specialized skills for a project, 
-                we'd be delighted to discuss how our IT staffing solutions can support your organization's goals.
-              </p>
-            </div>
+          <div className={`prose prose-lg max-w-none text-black mb-8 transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+  <p className="mb-6 leading-relaxed">
+    We are <strong className="text-black">CREDIBLE-IT SOLUTIONS</strong>, a consultancy firm specializing in IT staffing solutions. 
+    Our expertise lies in providing top-notch IT professionals to organizations like yours, 
+    ensuring seamless project execution and operational efficiency.
+  </p>
+
+  <p className="mb-6 leading-relaxed">
+    Our team can help you find the right talent for your IT needs, whether it's for short-term 
+    projects or long-term positions. We take pride in our rigorous screening process which involves 
+    use of AI with deep human evaluation, this ensures that only the most skilled and experienced 
+    professionals are recommended to our clients.
+  </p>
+
+  <p className="leading-relaxed">
+    If you're looking to augment your IT team or require specialized skills for a project, 
+    we'd be delighted to discuss how our IT staffing solutions can support your organization's goals.
+  </p>
+</div>
+
 
             <div className={`flex flex-col sm:flex-row gap-4 transition-all duration-1000 delay-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <Button variant="secondary" size="lg" className="magnetic-hover">
+              <Button variant="secondary" size="lg" className="magnetic-hover text-blue-950">
+
                 Contact Us Today
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
               </Button>

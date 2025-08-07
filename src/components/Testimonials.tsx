@@ -70,7 +70,7 @@ const Testimonials = () => {
 </span>
 
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl max-w-3xl mx-auto leading-relaxed">
             Don't just take our word for it. Here's what our satisfied clients have to say about 
             our IT solutions and services.
           </p>
