@@ -194,10 +194,10 @@ Message: ${formData.message}
           <div className="lg:col-span-2">
             <Card className="border-0 shadow-elegant animate-fade-in-right">
               <CardHeader>
-                <CardTitle className="text-2xl font-bold text-foreground">
+                <CardTitle className="text-2xl font-bold text-gray-900">
                   Send us a Message
                 </CardTitle>
-                <p className="text-muted-foreground">
+                <p className="text-gray-700">
                   Fill out the form below and we'll get back to you as soon as possible.
                 </p>
               </CardHeader>

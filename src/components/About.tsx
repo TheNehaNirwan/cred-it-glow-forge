@@ -76,7 +76,7 @@ const About = () => {
             
             <div className={`prose prose-lg max-w-none text-muted-foreground mb-8 transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               <p className="mb-6 leading-relaxed">
-                We are <strong className="text-primary">CRED IT SOLUTIONS</strong>, a consultancy firm specializing in IT staffing solutions. 
+                We are <strong className="text-gray-900">CREDIBLE-IT SOLUTIONS</strong>, a consultancy firm specializing in IT staffing solutions. 
                 Our expertise lies in providing top-notch IT professionals to organizations like yours, 
                 ensuring seamless project execution and operational efficiency.
               </p>
