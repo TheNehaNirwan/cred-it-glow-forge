@@ -12,15 +12,15 @@ const Footer = () => {
             <div className="flex items-center space-x-3 mb-6">
               <div className="relative">
                 <img
-                  src="/lovable-uploads/e9551c16-fe28-4398-8884-fdb0424048f9.png"
-                  alt="CREDIBLE IT SOLUTIONS"
+                  src="/lovable-uploads/953a64b5-4661-475d-86af-3ad63cf857c1.png"
+                  alt="CREDIBLE-IT SOLUTIONS"
                   className="w-32 h-32 object-contain relative z-10"
                 />
                 <div className="absolute inset-0 bg-navy opacity-20 blur-xl rounded-full"></div>
               </div>
               <div>
                 <h3 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                  CREDIBLE IT SOLUTIONS
+                  CREDIBLE-IT SOLUTIONS
                 </h3>
                 <p className="text-navy-foreground/70">Your Partner in IT Excellence</p>
               </div>
@@ -106,7 +106,7 @@ const Footer = () => {
         <Container className="py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-navy-foreground/60 text-sm">
-              © 2024 CREDIBLE IT SOLUTIONS. All rights reserved.
+              © 2024 CREDIBLE-IT SOLUTIONS. All rights reserved.
             </p>
             <div className="flex items-center gap-6 text-sm">
               <a href="#" className="text-navy-foreground/60 hover:text-secondary transition-colors">

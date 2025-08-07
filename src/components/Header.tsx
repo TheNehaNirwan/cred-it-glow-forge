@@ -15,13 +15,13 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <img
-              src="/lovable-uploads/e9551c16-fe28-4398-8884-fdb0424048f9.png"
-              alt="CREDIBLE IT SOLUTIONS"
+              src="/lovable-uploads/953a64b5-4661-475d-86af-3ad63cf857c1.png"
+              alt="CREDIBLE-IT SOLUTIONS"
               className="w-20 h-20 object-contain" // Adjusted from w-24 h-24
             />
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                CREDIBLE IT SOLUTIONS
+                CREDIBLE-IT SOLUTIONS
               </h1>
 <p className="text-xs text-gray-900">Your Partner in IT Excellence</p>
             </div>

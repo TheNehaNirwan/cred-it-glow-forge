@@ -73,7 +73,7 @@ const LandingCover = ({ onEnter }: LandingCoverProps) => {
             transition={{ delay: 1 }}
           >
             <h1 className="text-3xl md:text-4xl font-light text-navy-foreground tracking-wider">
-              CREDIBLE IT SOLUTIONS
+              CREDIBLE-IT SOLUTIONS
             </h1>
             <p className="text-lg md:text-xl text-navy-foreground/80 max-w-xl mx-auto px-4 font-light tracking-wide">
               A digital transformation company creating

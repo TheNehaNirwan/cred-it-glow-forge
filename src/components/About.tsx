@@ -165,7 +165,7 @@ const About = () => {
           <div className="text-navy-foreground">
             <p className="font-semibold text-lg mb-2">Best regards,</p>
             <p className="text-xl font-bold text-accent mb-2">Vertika Mishra</p>
-            <p className="font-medium">CREDIBLE IT SOLUTIONS</p>
+            <p className="font-medium">CREDIBLE-IT SOLUTIONS</p>
           </div>
         </div>
       </Container>
