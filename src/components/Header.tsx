@@ -23,7 +23,7 @@ const Header = () => {
               <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
                 CREDIBLE IT SOLUTIONS
               </h1>
-              <p className="text-xs text-muted-foreground">Your Partner in IT Excellence</p>
+<p className="text-xs text-gray-900">Your Partner in IT Excellence</p>
             </div>
           </div>
 

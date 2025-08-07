@@ -131,9 +131,10 @@ Message: ${formData.message}
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Let's{" "}
-            <span className="bg-gradient-accent bg-clip-text text-transparent">
-              Start a Conversation
-            </span>
+           <span className="bg-gradient-to-r from-purple-800 via-purple-900 to-purple-950 bg-clip-text text-transparent">
+  Start a Conversation
+</span>
+
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Ready to transform your business with our IT solutions? Get in touch with us today 

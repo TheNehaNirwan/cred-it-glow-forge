@@ -76,7 +76,7 @@ const Team = () => {
           transition={{ duration: 0.8 }}
         >
           <div className={`inline-flex items-center px-6 py-3 bg-accent/20 rounded-full mb-6 transition-all duration-1000 ${isVisible ? 'animate-slide-down' : 'opacity-0 translate-y-[-20px]'}`}>
-            <span className="text-accent font-semibold animate-text-glow">👥 Our Leadership</span>
+<span className="text-black font-semibold animate-text-glow">👥 Our Leadership</span>
           </div>
           
           <motion.h2 

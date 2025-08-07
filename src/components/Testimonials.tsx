@@ -65,9 +65,10 @@ const Testimonials = () => {
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             What Our{" "}
-            <span className="bg-gradient-accent bg-clip-text text-transparent">
-              Clients Say
-            </span>
+           <span className="bg-gradient-to-r from-purple-800 via-purple-900 to-purple-950 bg-clip-text text-transparent">
+  Clients Say
+</span>
+
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Don't just take our word for it. Here's what our satisfied clients have to say about 
