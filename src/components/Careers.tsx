@@ -223,41 +223,41 @@ const Careers = () => {
   };
 
   return (
-    <section id="careers" className="py-20 bg-gradient-to-b from-background to-background/80">
+    <section id="careers" className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-background/80">
       <Container>
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">
+        <div className="text-center mb-12 sm:mb-14 md:mb-16 px-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-3 sm:mb-4">
             <AnimatedText text="Join Our Team" className="inline-block" />
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
             We're always looking for talented individuals to join our team. Check out our current openings below.
           </p>
         </div>
 
         {isLoading ? (
           <div className="flex justify-center items-center min-h-[40vh]">
-            <p className="text-lg text-muted-foreground">Loading job listings...</p>
+            <p className="text-base sm:text-lg text-muted-foreground">Loading job listings...</p>
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
             {jobs.map((job) => (
               <div
                 key={job.id}
-                className="bg-card rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-border/50 hover:border-accent/50"
+                className="bg-card rounded-xl p-4 sm:p-5 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-border/50 hover:border-accent/50"
               >
-                <h3 className="text-xl font-semibold mb-3 text-gray-800">{job.title}</h3>
-                <div className="flex items-center gap-2 text-sm text-accent mb-4">
+                <h3 className="text-lg sm:text-xl font-semibold mb-3 text-gray-800 leading-tight">{job.title}</h3>
+                <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-accent mb-3 sm:mb-4">
                   <span className="font-medium">Location:</span>
-                  <span>{job.location}</span>
+                  <span className="break-words">{job.location}</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-accent mb-4">
+                <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-accent mb-3 sm:mb-4">
                   <span className="font-medium">Department:</span>
-                  <span>{job.department}</span>
+                  <span className="break-words">{job.department}</span>
                 </div>
-                <p className="text-gray-600 line-clamp-4 mb-4">{job.description}</p>
+                <p className="text-gray-600 line-clamp-4 mb-4 text-sm sm:text-base leading-relaxed">{job.description}</p>
                 <Button
                   variant="outline"
-                  className="w-full hover:bg-accent hover:text-accent-foreground"
+                  className="w-full hover:bg-accent hover:text-accent-foreground text-sm sm:text-base"
                   onClick={() => setSelectedJob(job)}
                 >
                   Apply Now
@@ -279,23 +279,23 @@ const Careers = () => {
             className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 overflow-y-auto"
             style={{ height: '100vh' }}
           >
-            <div className="min-h-screen p-4 flex items-start justify-center">
-              <Card className="w-full max-w-2xl my-8">
-                <div className="border-b border-border p-6">
+            <div className="min-h-screen p-2 sm:p-4 flex items-start justify-center">
+              <Card className="w-full max-w-2xl my-4 sm:my-6 md:my-8">
+                <div className="border-b border-border p-4 sm:p-6">
                   <div className="flex justify-between items-center">
-                    <h2 className="text-2xl font-bold">Job Application</h2>
+                    <h2 className="text-xl sm:text-2xl font-bold">Job Application</h2>
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={() => setSelectedJob(null)}
-                      className="text-muted-foreground hover:text-foreground"
+                      className="text-muted-foreground hover:text-foreground flex-shrink-0"
                     >
-                      <X className="h-5 w-5" />
+                      <X className="h-4 w-4 sm:h-5 sm:w-5" />
                     </Button>
                   </div>
                 </div>
 
-                <CardContent className="p-6">
+                <CardContent className="p-4 sm:p-6">
                   {/* Job Details */}
                   <div className="mb-6 border-b border-border pb-6">
                     <h3 className="text-xl font-semibold text-primary mb-2">{selectedJob.title}</h3>

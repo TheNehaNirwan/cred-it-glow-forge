@@ -122,34 +122,34 @@ Message: ${formData.message}
   ];
 
   return (
-    <section id="contact" className="py-20 bg-background">
+    <section id="contact" className="py-12 sm:py-16 md:py-20 bg-background">
       <Container>
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <div className="inline-flex items-center px-4 py-2 bg-accent/10 rounded-full mb-6">
-            <span className="text-accent-foreground font-semibold text-sm">📞 Contact Us</span>
+        <div className="text-center mb-12 sm:mb-14 md:mb-16 animate-fade-in px-4">
+          <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-accent/10 rounded-full mb-4 sm:mb-6">
+            <span className="text-accent-foreground font-semibold text-xs sm:text-sm">📞 Contact Us</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 sm:mb-6">
             Let's{" "}
            <span className="bg-gradient-to-r from-purple-800 via-purple-900 to-purple-950 bg-clip-text text-transparent">
   Start a Conversation
 </span>
 
           </h2>
-          <p className="text-xl max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
             Ready to transform your business with our IT solutions? Get in touch with us today 
             for a free consultation and discover how we can help you achieve your goals.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-12">
+        <div className="grid lg:grid-cols-3 gap-8 sm:gap-10 md:gap-12">
           {/* Contact Information */}
           <div className="lg:col-span-1">
-            <h3 className="text-2xl font-bold text-foreground mb-8 animate-fade-in-left">
+            <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-6 sm:mb-8 animate-fade-in-left text-center lg:text-left">
               Get in Touch
             </h3>
             
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {contactMethods.map((method, index) => (
                 <Card 
                   key={index} 
@@ -167,19 +167,19 @@ Message: ${formData.message}
                     }
                   }}
                 >
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
-                      <div className={`w-12 h-12 ${method.gradient} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                        <method.icon className="w-6 h-6 text-white" />
+                  <CardContent className="p-4 sm:p-6">
+                    <div className="flex items-start gap-3 sm:gap-4">
+                      <div className={`w-10 h-10 sm:w-12 sm:h-12 ${method.gradient} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0`}>
+                        <method.icon className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
                       </div>
-                      <div className="flex-1">
-                        <h4 className="font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-bold text-foreground mb-1 group-hover:text-primary transition-colors text-sm sm:text-base">
                           {method.title}
                         </h4>
-                        <p className="text-lg font-semibold text-primary mb-1">
+                        <p className="text-base sm:text-lg font-semibold text-primary mb-1 break-all">
                           {method.details}
                         </p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-xs sm:text-sm text-muted-foreground">
                           {method.description}
                         </p>
                       </div>
@@ -193,17 +193,17 @@ Message: ${formData.message}
           {/* Contact Form */}
           <div className="lg:col-span-2">
             <Card className="border-0 shadow-elegant animate-fade-in-right">
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-gray-900">
+              <CardHeader className="text-center lg:text-left">
+                <CardTitle className="text-xl sm:text-2xl font-bold text-gray-900">
                   Send us a Message
                 </CardTitle>
-                <p className="text-gray-700">
+                <p className="text-gray-700 text-sm sm:text-base">
                   Fill out the form below and we'll get back to you as soon as possible.
                 </p>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
+              <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6">
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                  <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">
                         First Name *
@@ -213,7 +213,7 @@ Message: ${formData.message}
                         value={formData.firstName}
                         onChange={handleInputChange}
                         placeholder="Enter your first name"
-                        className="h-12"
+                        className="h-10 sm:h-12 text-sm sm:text-base"
                         required
                       />
                     </div>
@@ -226,13 +226,13 @@ Message: ${formData.message}
                         value={formData.lastName}
                         onChange={handleInputChange}
                         placeholder="Enter your last name"
-                        className="h-12"
+                        className="h-10 sm:h-12 text-sm sm:text-base"
                         required
                       />
                     </div>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">
                         Email Address *
@@ -243,7 +243,7 @@ Message: ${formData.message}
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder="Enter your email"
-                        className="h-12"
+                        className="h-10 sm:h-12 text-sm sm:text-base"
                         required
                       />
                     </div>
@@ -257,7 +257,7 @@ Message: ${formData.message}
                         value={formData.phone}
                         onChange={handleInputChange}
                         placeholder="Enter your phone number"
-                        className="h-12"
+                        className="h-10 sm:h-12 text-sm sm:text-base"
                       />
                     </div>
                   </div>
@@ -271,7 +271,7 @@ Message: ${formData.message}
                       value={formData.company}
                       onChange={handleInputChange}
                       placeholder="Enter your company name"
-                      className="h-12"
+                      className="h-10 sm:h-12 text-sm sm:text-base"
                     />
                   </div>
 
@@ -284,7 +284,7 @@ Message: ${formData.message}
                       value={formData.message}
                       onChange={handleInputChange}
                       placeholder="Tell us about your IT staffing needs, project requirements, or any questions you have..."
-                      className="min-h-32 resize-none"
+                      className="min-h-24 sm:min-h-32 resize-none text-sm sm:text-base"
                       required
                     />
                   </div>
@@ -296,7 +296,7 @@ Message: ${formData.message}
                     className="w-full group animate-pulse-glow"
                   >
                     Send Message
-                    <Send className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                    <Send className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </form>
 
@@ -312,31 +312,31 @@ Message: ${formData.message}
         </div>
 
         {/* CTA Banner */}
-        <div className="mt-20 bg-gradient-hero rounded-3xl p-12 text-center animate-fade-in">
-          <h3 className="text-3xl md:text-4xl font-bold text-navy-foreground mb-6">
+        <div className="mt-12 sm:mt-16 md:mt-20 bg-gradient-hero rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 text-center animate-fade-in">
+          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-navy-foreground mb-4 sm:mb-6">
             Ready to Transform Your Business?
           </h3>
-          <p className="text-xl text-navy-foreground/80 mb-8 max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-navy-foreground/80 mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
             Don't wait! Contact us today for a free consultation and discover how our 
             IT staffing solutions can drive your business forward.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <Button 
               variant="hero" 
-              size="xl" 
-              className="bg-accent hover:bg-accent-glow animate-pulse-glow"
+              size="lg" 
+              className="bg-accent hover:bg-accent-glow animate-pulse-glow text-sm sm:text-base"
               onClick={() => handlePhoneClick('8433613966')}
             >
-              <Phone className="w-5 h-5 mr-2" />
+              <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
               Call Now: 8433613966
             </Button>
             <Button 
               variant="outline" 
-              size="xl"
-              className="border-navy-foreground/30 text-navy-foreground hover:bg-navy-foreground hover:text-navy"
+              size="lg"
+              className="border-navy-foreground/30 text-navy-foreground hover:bg-navy-foreground hover:text-navy text-sm sm:text-base"
               onClick={() => handleEmailClick('hr@credibleit.tech')}
             >
-              <Mail className="w-5 h-5 mr-2" />
+              <Mail className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
               Email Us
             </Button>
           </div>
