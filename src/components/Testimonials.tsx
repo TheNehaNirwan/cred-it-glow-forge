@@ -56,21 +56,21 @@ const Testimonials = () => {
   }
 
   return (
-    <section className="py-20 bg-muted/50">
+    <section className="py-12 sm:py-16 md:py-20 bg-muted/50">
       <Container>
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <div className="inline-flex items-center px-4 py-2 bg-accent/10 rounded-full mb-6">
-            <span className="text-accent-foreground font-semibold text-sm">⭐ Testimonials</span>
+        <div className="text-center mb-12 sm:mb-14 md:mb-16 animate-fade-in px-4">
+          <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-accent/10 rounded-full mb-4 sm:mb-6">
+            <span className="text-accent-foreground font-semibold text-xs sm:text-sm">⭐ Testimonials</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 sm:mb-6">
             What Our{" "}
            <span className="bg-gradient-to-r from-purple-800 via-purple-900 to-purple-950 bg-clip-text text-transparent">
   Clients Say
 </span>
 
           </h2>
-          <p className="text-xl max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed px-4">
             Don't just take our word for it. Here's what our satisfied clients have to say about 
             our IT solutions and services.
           </p>
@@ -78,34 +78,34 @@ const Testimonials = () => {
 
         {/* Testimonials Grid */}
         {testimonials.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
             {testimonials.map((testimonial, index) => (
               <Card 
                 key={testimonial.id}
                 className="border-0 shadow-elegant hover:shadow-primary transition-all duration-300 hover:-translate-y-1 animate-scale-in"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <CardContent className="p-8">
-                  <div className="flex items-center justify-between mb-6">
-                    <Quote className="w-8 h-8 text-accent opacity-60" />
+                <CardContent className="p-4 sm:p-6 md:p-8">
+                  <div className="flex items-center justify-between mb-4 sm:mb-6">
+                    <Quote className="w-6 h-6 sm:w-8 sm:h-8 text-accent opacity-60" />
                     <div className="flex gap-1">
                       {renderStars(testimonial.rating)}
                     </div>
                   </div>
                   
-                  <blockquote className="text-foreground mb-6 leading-relaxed italic">
+                  <blockquote className="text-foreground mb-4 sm:mb-6 leading-relaxed italic text-sm sm:text-base">
                     "{testimonial.description}"
                   </blockquote>
                   
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold text-lg">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-primary rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-bold text-sm sm:text-lg">
                         {testimonial.name.charAt(0).toUpperCase()}
                       </span>
                     </div>
-                    <div>
-                      <h4 className="font-bold text-foreground">{testimonial.name}</h4>
-                      <p className="text-sm text-muted-foreground">
+                    <div className="min-w-0">
+                      <h4 className="font-bold text-foreground text-sm sm:text-base">{testimonial.name}</h4>
+                      <p className="text-xs sm:text-sm text-muted-foreground">
                         {new Date(testimonial.created_at).toLocaleDateString('en-US', {
                           year: 'numeric',
                           month: 'long'

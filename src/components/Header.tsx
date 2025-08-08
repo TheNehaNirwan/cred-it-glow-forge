@@ -10,20 +10,20 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-b border-border/50">
       {/* Main Navigation */}
-      <nav className="container mx-auto px-4 py-4">
-        <div className="flex justify-between items-center">
+      <nav className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
+        <div className="flex justify-between items-center min-h-[60px]">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 sm:space-x-3">
             <img
               src="/lovable-uploads/953a64b5-4661-475d-86af-3ad63cf857c1.png"
               alt="CREDIBLE-IT SOLUTIONS"
-              className="w-28 h-28 object-contain" // Increased from w-20 h-20
+              className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 object-contain flex-shrink-0"
             />
-            <div className="hidden sm:block">
-              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+            <div className="hidden sm:block min-w-0">
+              <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent leading-tight">
                 CREDIBLE-IT SOLUTIONS
               </h1>
-<p className="text-xs text-gray-900">Your Partner in IT Excellence</p>
+              <p className="text-xs sm:text-sm text-gray-900 leading-tight">Your Partner in IT Excellence</p>
             </div>
           </div>
 
