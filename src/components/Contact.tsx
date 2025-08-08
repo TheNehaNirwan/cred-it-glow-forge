@@ -126,16 +126,21 @@ Message: ${formData.message}
       <Container>
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-14 md:mb-16 animate-fade-in px-4">
-          <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-accent/10 rounded-full mb-4 sm:mb-6">
-            <span className="text-accent-foreground font-semibold text-xs sm:text-sm">📞 Contact Us</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 sm:mb-6">
-            Let's{" "}
-           <span className="bg-gradient-to-r from-purple-800 via-purple-900 to-purple-950 bg-clip-text text-transparent">
-  Start a Conversation
-</span>
+         <div className="inline-flex items-center px-6 py-3 bg-accent/20 rounded-full mb-4 sm:mb-6">
+  <span className="text-black font-bold text-sm sm:text-base">🚀 Join Our Team</span>
+</div>
+<p className="text-gray-800 font-semibold max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
+  We're always looking for talented individuals to join our team. Check out our current openings below.
+</p>
+<h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
+  <span className="bg-gradient-to-r from-purple-800 via-purple-900 to-purple-950 bg-clip-text text-transparent">
+    Let's
+  </span>{" "}
+  <span className="bg-gradient-to-r from-purple-800 via-purple-900 to-purple-950 bg-clip-text text-transparent">
+    Start a Conversation
+  </span>
+</h2>
 
-          </h2>
           <p className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
             Ready to transform your business with our IT solutions? Get in touch with us today 
             for a free consultation and discover how we can help you achieve your goals.
@@ -312,35 +317,36 @@ Message: ${formData.message}
         </div>
 
         {/* CTA Banner */}
-        <div className="mt-12 sm:mt-16 md:mt-20 bg-gradient-hero rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 text-center animate-fade-in">
-          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-navy-foreground mb-4 sm:mb-6">
-            Ready to Transform Your Business?
-          </h3>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-navy-foreground/80 mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
-            Don't wait! Contact us today for a free consultation and discover how our 
-            IT staffing solutions can drive your business forward.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-            <Button 
-              variant="hero" 
-              size="lg" 
-              className="bg-accent hover:bg-accent-glow animate-pulse-glow text-sm sm:text-base"
-              onClick={() => handlePhoneClick('8433613966')}
-            >
-              <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-              Call Now: 8433613966
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg"
-              className="border-navy-foreground/30 text-navy-foreground hover:bg-navy-foreground hover:text-navy text-sm sm:text-base"
-              onClick={() => handleEmailClick('hr@credibleit.tech')}
-            >
-              <Mail className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-              Email Us
-            </Button>
-          </div>
-        </div>
+    <div className="mt-12 sm:mt-16 md:mt-20 bg-gradient-hero rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 text-center animate-fade-in">
+  <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-navy-foreground mb-4 sm:mb-6">
+    Ready to Transform Your Business?
+  </h3>
+  <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-navy-foreground/90 font-semibold mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
+    Don't wait! Contact us today for a free consultation and discover how our 
+    IT staffing solutions can drive your business forward.
+  </p>
+  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+    <Button 
+      variant="hero" 
+      size="lg" 
+      className="bg-accent hover:bg-accent-glow animate-pulse-glow text-black font-bold text-sm sm:text-lg"
+      onClick={() => handlePhoneClick('8433613966')}
+    >
+      <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+      Call Now: 8433613966
+    </Button>
+    <Button 
+      variant="outline" 
+      size="lg"
+      className="border-navy-foreground/30 text-navy-foreground hover:bg-navy-foreground hover:text-navy text-sm sm:text-lg font-bold"
+      onClick={() => handleEmailClick('hr@credibleit.tech')}
+    >
+      <Mail className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+      Email Us
+    </Button>
+  </div>
+</div>
+
       </Container>
     </section>
   );

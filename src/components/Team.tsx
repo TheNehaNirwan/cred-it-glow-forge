@@ -75,34 +75,45 @@ const Team = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <div className={`inline-flex items-center px-6 py-3 bg-accent/20 rounded-full mb-6 transition-all duration-1000 ${isVisible ? 'animate-slide-down' : 'opacity-0 translate-y-[-20px]'}`}>
-<span className="text-black font-semibold animate-text-glow">👥 Our Leadership</span>
-          </div>
+<div
+  className={`inline-flex items-center px-6 py-3 bg-accent/20 rounded-full mb-6 transition-all duration-1000 ${
+    isVisible ? 'animate-slide-down' : 'opacity-0 translate-y-[-20px]'
+  }`}
+>
+  <span className="text-black font-bold text-lg sm:text-xl animate-text-glow">
+    👥 Our Leadership
+  </span>
+</div>
+
           
-          <motion.h2 
-            className="text-4xl md:text-5xl font-bold mb-6"
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <span className="font-serif italic text-gray-800">Exceptional Team</span>{" "}
-            <br />
-            <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient-shift font-bold">
-              Extraordinary Results
-            </span>
-          </motion.h2>
+     <motion.h2 
+  className="text-4xl md:text-5xl font-bold mb-6"
+  initial={{ opacity: 0, scale: 0.5 }}
+  whileInView={{ opacity: 1, scale: 1 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.8, delay: 0.2 }}
+>
+  <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient-shift font-serif italic font-bold">
+    Exceptional Team
+  </span>{" "}
+  <br />
+  <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient-shift font-bold">
+    Extraordinary Results
+  </span>
+</motion.h2>
+
           
           <motion.p 
-            className="text-xl text-gray-600 max-w-2xl mx-auto"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            Our expert team combines deep technical knowledge with innovative solutions 
-            to deliver exceptional results for your business.
-          </motion.p>
+  className="text-xl text-black font-semibold max-w-2xl mx-auto"
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.8, delay: 0.4 }}
+>
+  Our expert team combines deep technical knowledge with innovative solutions 
+  to deliver exceptional results for your business.
+</motion.p>
+
 
           <motion.div 
             className="w-24 h-1 bg-gradient-primary mx-auto mt-6"

@@ -99,24 +99,27 @@ const Services = () => {
             transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s"
           }}
         >
-          <motion.h2 
-            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4"
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Our <span className="font-serif italic text-primary">Services</span>
-          </motion.h2>
-          <motion.p 
-            className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            What Solutions We Provide
-          </motion.p>
+        <motion.h2 
+  className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4"
+  initial={{ opacity: 0, scale: 0.5 }}
+  whileInView={{ opacity: 1, scale: 1 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.8, delay: 0.2 }}
+>
+  <span className="text-primary">Our</span> 
+  <span className="font-serif italic text-primary"> Services</span>
+</motion.h2>
+
+         <motion.p 
+  className="text-lg sm:text-xl text-black font-medium max-w-3xl mx-auto px-4"
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.8, delay: 0.4 }}
+>
+  What Solutions We Provide
+</motion.p>
+
           <motion.div 
             className="w-16 sm:w-20 md:w-24 h-1 bg-gradient-primary mx-auto mt-4 sm:mt-6"
             initial={{ width: 0 }}
@@ -240,72 +243,79 @@ const Services = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h3 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">
-              Our <span className="font-serif italic text-primary">Development Process</span>
-            </h3>
-            <p className="text-gray-600 text-sm sm:text-base px-4">
-              We follow a proven methodology to ensure successful project delivery
-            </p>
+          <h3 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">
+  <span className="text-primary">Our</span> 
+  <span className="font-serif italic text-primary"> Development Process</span>
+</h3>
+
+<p className="text-black font-semibold text-base sm:text-lg px-4">
+  We follow a proven methodology to ensure successful project delivery
+</p>
+
+
           </motion.div>
 
+       <motion.div 
+  className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 relative z-10"
+  variants={containerVariants}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true }}
+>
+  {[
+    { step: '01', title: 'Discovery', desc: 'Understanding your requirements and goals' },
+    { step: '02', title: 'Planning', desc: 'Strategic roadmap and architecture design' },
+    { step: '03', title: 'Development', desc: 'Agile development with regular updates' },
+    { step: '04', title: 'Deployment', desc: 'Launch and ongoing support & maintenance' }
+  ].map((process, index) => (
+    <motion.div 
+      key={index} 
+      className="text-center group relative"
+      variants={itemVariants}
+      whileHover={{ scale: 1.1 }}
+    >
+      <div className="relative mb-4 sm:mb-6">
+        <motion.div 
+          className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-primary text-white rounded-full flex items-center justify-center mx-auto font-bold text-sm sm:text-base md:text-lg relative overflow-hidden"
+          whileHover={{ scale: 1.2, rotate: 360 }}
+          transition={{ duration: 0.6 }}
+        >
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+            animate={{
+              x: ['-200%', '200%'],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "loop",
+              ease: "linear",
+            }}
+          />
+          <span className="relative z-10">{process.step}</span>
+        </motion.div>
+        {index < 3 && (
           <motion.div 
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 relative z-10"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
+            className="hidden md:block absolute top-6 sm:top-7 md:top-8 left-full w-full h-0.5 bg-gradient-to-r from-primary to-secondary"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
-          >
-            {[
-              { step: '01', title: 'Discovery', desc: 'Understanding your requirements and goals' },
-              { step: '02', title: 'Planning', desc: 'Strategic roadmap and architecture design' },
-              { step: '03', title: 'Development', desc: 'Agile development with regular updates' },
-              { step: '04', title: 'Deployment', desc: 'Launch and ongoing support & maintenance' }
-            ].map((process, index) => (
-              <motion.div 
-                key={index} 
-                className="text-center group relative"
-                variants={itemVariants}
-                whileHover={{ scale: 1.1 }}
-              >
-                <div className="relative mb-4 sm:mb-6">
-                  <motion.div 
-                    className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-primary text-white rounded-full flex items-center justify-center mx-auto font-bold text-sm sm:text-base md:text-lg relative overflow-hidden"
-                    whileHover={{ scale: 1.2, rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                      animate={{
-                        x: ['-200%', '200%'],
-                      }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        repeatType: "loop",
-                        ease: "linear",
-                      }}
-                    />
-                    <span className="relative z-10">{process.step}</span>
-                  </motion.div>
-                  {index < 3 && (
-                    <motion.div 
-                      className="hidden md:block absolute top-6 sm:top-7 md:top-8 left-full w-full h-0.5 bg-gradient-to-r from-primary to-secondary"
-                      initial={{ scaleX: 0 }}
-                      whileInView={{ scaleX: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.8, delay: index * 0.2 }}
-                    ></motion.div>
-                  )}
-                </div>
-                <h4 className="font-bold text-base sm:text-lg mb-1 sm:mb-2 group-hover:text-primary transition-colors duration-300">
-                  {process.title}
-                </h4>
-                <p className="text-gray-600 text-xs sm:text-sm text-center px-2">
-                  {process.desc}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
+            transition={{ duration: 0.8, delay: index * 0.2 }}
+          ></motion.div>
+        )}
+      </div>
+      {/* Larger title */}
+      <h4 className="font-bold text-lg sm:text-xl mb-1 sm:mb-2 group-hover:text-primary transition-colors duration-300">
+        {process.title}
+      </h4>
+      {/* Larger, black, bold description */}
+      <p className="text-black font-medium text-sm sm:text-base text-center px-2">
+        {process.desc}
+      </p>
+    </motion.div>
+  ))}
+</motion.div>
+
         </motion.div>
       </Container>
     </section>

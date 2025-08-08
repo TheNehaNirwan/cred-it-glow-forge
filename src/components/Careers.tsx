@@ -225,14 +225,15 @@ const Careers = () => {
   return (
     <section id="careers" className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-background to-background/80">
       <Container>
-        <div className="text-center mb-12 sm:mb-14 md:mb-16 px-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-3 sm:mb-4">
-            <AnimatedText text="Join Our Team" className="inline-block" />
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
-            We're always looking for talented individuals to join our team. Check out our current openings below.
-          </p>
-        </div>
+     <div className="text-center mb-12 sm:mb-14 md:mb-16 px-4">
+  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-3 sm:mb-4 font-serif italic">
+    <AnimatedText text="Join Our Team" className="inline-block" />
+  </h2>
+  <p className="text-gray-800 font-semibold max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
+    We're always looking for talented individuals to join our team. Check out our current openings below.
+  </p>
+</div>
+
 
         {isLoading ? (
           <div className="flex justify-center items-center min-h-[40vh]">

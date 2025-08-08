@@ -60,14 +60,20 @@ const Testimonials = () => {
       <Container>
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-14 md:mb-16 animate-fade-in px-4">
-          <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-accent/10 rounded-full mb-4 sm:mb-6">
-            <span className="text-accent-foreground font-semibold text-xs sm:text-sm">⭐ Testimonials</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 sm:mb-6">
-            What Our{" "}
-           <span className="bg-gradient-to-r from-purple-800 via-purple-900 to-purple-950 bg-clip-text text-transparent">
-  Clients Say
-</span>
+   <div className="inline-flex items-center px-6 py-3 bg-accent/20 rounded-full mb-6 transition-all duration-1000">
+  <span className="text-black font-semibold text-base sm:text-lg animate-text-glow">
+    ⭐ Testimonials
+  </span>
+</div>
+
+         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 sm:mb-6">
+  <span className="bg-gradient-to-r from-purple-800 via-purple-900 to-purple-950 bg-clip-text text-transparent">
+    What Our
+  </span>{" "}
+  <span className="bg-gradient-to-r from-purple-800 via-purple-900 to-purple-950 bg-clip-text text-transparent">
+    Clients Say
+  </span>
+
 
           </h2>
           <p className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed px-4">

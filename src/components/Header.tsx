@@ -20,9 +20,10 @@ const Header = () => {
               className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 object-contain flex-shrink-0"
             />
             <div className="hidden sm:block min-w-0">
-              <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent leading-tight">
-                CREDIBLE-IT SOLUTIONS
-              </h1>
+
+             <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif italic font-bold text-darkblue leading-tight">
+  CREDIBLE-IT SOLUTIONS
+</h1>
               <p className="text-xs sm:text-sm text-gray-900 leading-tight">Your Partner in IT Excellence</p>
             </div>
           </div>
