@@ -58,7 +58,7 @@ const About = () => {
               Into Digital Excellence
             </span>
           </h2>
-          <motion.div 
+          <motion.div
             className="w-24 h-1 bg-gradient-to-r from-indigo-900 to-purple-900 mx-auto mt-6"
             initial={{ width: 0 }}
             whileInView={{ width: 96 }}
@@ -73,26 +73,26 @@ const About = () => {
             <h3 className={`text-3xl font-serif italic text-gray-800 mb-6 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               Your Trusted Partner in IT Excellence
             </h3>
-            
-          <div className={`prose prose-lg max-w-none text-black mb-8 transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-  <p className="mb-6 leading-relaxed">
-    We are <strong className="text-black">CREDIBLE-IT SOLUTIONS</strong>, a consultancy firm specializing in IT staffing solutions. 
-    Our expertise lies in providing top-notch IT professionals to organizations like yours, 
-    ensuring seamless project execution and operational efficiency.
-  </p>
 
-  <p className="mb-6 leading-relaxed">
-    Our team can help you find the right talent for your IT needs, whether it's for short-term 
-    projects or long-term positions. We take pride in our rigorous screening process which involves 
-    use of AI with deep human evaluation, this ensures that only the most skilled and experienced 
-    professionals are recommended to our clients.
-  </p>
+            <div className={`prose prose-lg max-w-none text-black mb-8 transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+              <p className="mb-6 leading-relaxed">
+                We are <strong className="text-black">CREDIBLE-IT SOLUTIONS</strong>, a consultancy firm specializing in IT staffing solutions.
+                Our expertise lies in providing top-notch IT professionals to organizations like yours,
+                ensuring seamless project execution and operational efficiency.
+              </p>
 
-  <p className="leading-relaxed">
-    If you're looking to augment your IT team or require specialized skills for a project, 
-    we'd be delighted to discuss how our IT staffing solutions can support your organization's goals.
-  </p>
-</div>
+              <p className="mb-6 leading-relaxed">
+                Our team can help you find the right talent for your IT needs, whether it's for short-term
+                projects or long-term positions. We take pride in our rigorous screening process which involves
+                use of AI with deep human evaluation, this ensures that only the most skilled and experienced
+                professionals are recommended to our clients.
+              </p>
+
+              <p className="leading-relaxed">
+                If you're looking to augment your IT team or require specialized skills for a project,
+                we'd be delighted to discuss how our IT staffing solutions can support your organization's goals.
+              </p>
+            </div>
 
 
             <div className={`flex flex-col sm:flex-row gap-4 transition-all duration-1000 delay-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
@@ -101,15 +101,15 @@ const About = () => {
                 Contact Us Today
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
               </Button>
-             
+
             </div>
           </div>
 
           {/* Stats Grid */}
           <div className="grid grid-cols-2 gap-6 fade-in-right">
             {stats.map((stat, index) => (
-              <Card 
-                key={index} 
+              <Card
+                key={index}
                 className={`text-center p-6 bg-card border-0 shadow-elegant hover:shadow-glow transition-all duration-500 hover:scale-105 magnetic-hover scale-in ${isVisible ? 'visible' : ''}`}
                 style={{ animationDelay: `${0.8 + index * 0.2}s` }}
               >
@@ -137,11 +137,11 @@ const About = () => {
               CREDIBLE-IT SOLUTIONS
             </span>
           </h3>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
             {values.map((value, index) => (
-              <Card 
-                key={index} 
+              <Card
+                key={index}
                 className="group p-6 bg-card border-0 shadow-elegant hover:shadow-primary transition-all duration-300 hover:-translate-y-2"
               >
                 <CardContent className="p-0">

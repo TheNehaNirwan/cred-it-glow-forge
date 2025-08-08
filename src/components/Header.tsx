@@ -20,9 +20,9 @@ const Header = () => {
               className="w-28 h-28 object-contain" // Increased from w-20 h-20
             />
             <div className="hidden sm:block">
-              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                CREDIBLE-IT SOLUTIONS
-              </h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-blue-900">
+  CREDIBLE-IT SOLUTIONS
+</h1>
 <p className="text-xs text-gray-900">Your Partner in IT Excellence</p>
             </div>
           </div>
