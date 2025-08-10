@@ -59,50 +59,50 @@ const Hero = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-accent opacity-10 rounded-full blur-3xl floating-element" style={{ animationDelay: '2s' }}></div>
       </div>
       
-      <Container className="relative z-10 pt-24 sm:pt-32 md:pt-40 lg:pt-48 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <Container className="relative z-10 pt-20 sm:pt-24 md:pt-32 lg:pt-40 xl:pt-48 pb-8 sm:pb-12 md:pb-16 lg:pb-20 px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 items-center">
           {/* Left Content */}
           <div className="text-center lg:text-left order-2 lg:order-1">
         
             {/* Main Heading with Letter Animation */}
-            <div className="mb-6 sm:mb-8">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent leading-tight animate-gradient-shift">
+            <div className="mb-4 sm:mb-6 md:mb-8">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent leading-tight animate-gradient-shift px-2 sm:px-0">
                 {displayText}
                 <span className="animate-blink ml-1 text-primary">|</span>
               </h1>
             </div>
             
             {/* Animated Key Benefits */}
-            <div className={`stagger-animation mb-6 sm:mb-8 space-y-2 sm:space-y-3 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-              <div className="flex items-center justify-center lg:justify-start gap-2 text-navy-foreground/90 magnetic-hover">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-secondary animate-bounce-gentle flex-shrink-0" />
-                <span className="text-sm sm:text-base">Top Tech Talent</span>
+            <div className={`stagger-animation mb-4 sm:mb-6 md:mb-8 space-y-1 sm:space-y-2 md:space-y-3 px-2 sm:px-0 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+              <div className="flex items-center justify-center lg:justify-start gap-2 sm:gap-3 text-navy-foreground/90 magnetic-hover">
+                <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-secondary animate-bounce-gentle flex-shrink-0" />
+                <span className="text-xs sm:text-sm md:text-base">Top Tech Talent</span>
               </div>
-              <div className="flex items-center justify-center lg:justify-start gap-2 text-navy-foreground/90 magnetic-hover">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-secondary animate-bounce-gentle flex-shrink-0" style={{ animationDelay: '0.2s' }} />
-                <span className="text-sm sm:text-base">AI-Powered Screening</span>
+              <div className="flex items-center justify-center lg:justify-start gap-2 sm:gap-3 text-navy-foreground/90 magnetic-hover">
+                <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-secondary animate-bounce-gentle flex-shrink-0" style={{ animationDelay: '0.2s' }} />
+                <span className="text-xs sm:text-sm md:text-base">AI-Powered Screening</span>
               </div>
-              <div className="flex items-center justify-center lg:justify-start gap-2 text-navy-foreground/90 magnetic-hover">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-secondary animate-bounce-gentle flex-shrink-0" style={{ animationDelay: '0.4s' }} />
-                <span className="text-sm sm:text-base">Strategic IT Guidance</span>
+              <div className="flex items-center justify-center lg:justify-start gap-2 sm:gap-3 text-navy-foreground/90 magnetic-hover">
+                <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-secondary animate-bounce-gentle flex-shrink-0" style={{ animationDelay: '0.4s' }} />
+                <span className="text-xs sm:text-sm md:text-base">Strategic IT Guidance</span>
               </div>
             </div>
             
             {/* Animated CTA Buttons */}
-            <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 transition-all duration-1000 delay-1500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className={`flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4 transition-all duration-1000 delay-1500 px-2 sm:px-0 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               <Button 
                 variant="hero" 
                 size="lg"
-                className="group glow-pulse magnetic-hover w-full sm:w-auto text-sm sm:text-base"
+                className="group glow-pulse magnetic-hover w-full sm:w-auto text-xs sm:text-sm md:text-base py-2 sm:py-3 px-4 sm:px-6"
                 onClick={() => scrollToSection('contact')}
               >
                 Get Free Consultation
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 group-hover:translate-x-2 transition-transform duration-300 ml-1 sm:ml-2" />
               </Button>
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-navy-foreground/30 text-navy-foreground hover:bg-navy-foreground hover:text-navy magnetic-hover w-full sm:w-auto text-sm sm:text-base"
+                className="border-navy-foreground/30 text-navy-foreground hover:bg-navy-foreground hover:text-navy magnetic-hover w-full sm:w-auto text-xs sm:text-sm md:text-base py-2 sm:py-3 px-4 sm:px-6"
                 onClick={() => scrollToSection('services')}
               >
                 View Our Services
@@ -111,14 +111,14 @@ const Hero = () => {
           </div>
 
           {/* Right Content - Enhanced Hero Image */}
-          <div className="relative order-1 lg:order-2 mb-8 lg:mb-0">
+          <div className="relative order-1 lg:order-2 mb-6 sm:mb-8 lg:mb-0 px-2 sm:px-4 lg:px-0">
             {/* Main Hero Image - loads with enhanced animation */}
             <div className={`relative transition-all duration-1500 delay-1000 ${isLoaded ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-75 rotate-6'}`}>
               <div className="relative group perspective-1000">
                 <img
                   src={heroTech}
                   alt="IT Solutions Technology"
-                  className="w-full h-auto max-w-lg mx-auto lg:max-w-none rounded-2xl sm:rounded-3xl shadow-elegant floating-element magnetic-hover transform-gpu"
+                  className="w-full h-auto max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-none mx-auto rounded-xl sm:rounded-2xl md:rounded-3xl shadow-elegant floating-element magnetic-hover transform-gpu"
                 />
                 
                 {/* Enhanced floating badges with cooler animations - responsive sizing */}
