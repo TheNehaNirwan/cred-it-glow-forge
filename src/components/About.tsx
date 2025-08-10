@@ -45,10 +45,10 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-8 sm:py-12 md:py-16 lg:py-20 bg-muted/30">
-      <Container className="px-2 sm:px-4 md:px-6 lg:px-8">
+    <section id="about" className="py-20 bg-muted/30">
+      <Container>
         {/* Section Header */}
-        <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16 fade-in-up px-2 sm:px-4">
+        <div className="text-center mb-16 fade-in-up">
          <div
   className={`inline-flex items-center px-4 py-2 bg-indigo-900/10 rounded-full mb-6 transition-all duration-700 ${
     isVisible ? 'animate-slide-down' : 'opacity-0 translate-y-[-20px]'
@@ -60,14 +60,14 @@ const About = () => {
 </div>
 
        <h2
-  className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 transition-all duration-1000 delay-300 ${
+  className={`text-4xl md:text-5xl font-bold mb-6 transition-all duration-1000 delay-300 ${
     isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
   }`}
 >
   <span className="bg-gradient-to-r from-indigo-900 to-purple-900 bg-clip-text text-transparent animate-gradient-shift font-serif italic">
     Transforming Ideas
   </span>{" "}
-  <span className="bg-gradient-to-r from-indigo-900 to-purple-900 bg-clip-text text-transparent animate-gradient-shift font-bold">
+  <span className="ml-2 bg-gradient-to-r from-indigo-900 to-purple-900 bg-clip-text text-transparent animate-gradient-shift font-bold">
     Into Digital Excellence
   </span>
 </h2>
@@ -81,11 +81,11 @@ const About = () => {
           ></motion.div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center mb-12 sm:mb-16 lg:mb-20">
+        <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
           {/* About Content */}
           <div className="fade-in-left">
            <h3
-  className={`text-xl sm:text-2xl md:text-3xl font-serif italic font-bold text-gray-800 mb-4 sm:mb-6 transition-all duration-1000 delay-500 ${
+  className={`text-3xl font-serif italic font-bold text-gray-800 whitespace-nowrap mb-6 transition-all duration-1000 delay-500 ${
     isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
   }`}
 >
@@ -94,7 +94,7 @@ const About = () => {
 
 
           <div
-  className={`prose max-w-none text-black text-sm sm:text-base md:text-lg lg:text-xl mb-6 sm:mb-8 transition-all duration-1000 delay-700 ${
+  className={`prose max-w-none text-black text-lg sm:text-xl mb-8 transition-all duration-1000 delay-700 ${
     isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
   }`}
 >
@@ -133,7 +133,7 @@ const About = () => {
           </div>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 fade-in-right">
+          <div className="grid grid-cols-2 gap-6 fade-in-right">
             {stats.map((stat, index) => (
               <Card
                 key={index}
@@ -168,7 +168,7 @@ const About = () => {
 </h3>
 
 
-       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 md:gap-8 px-2 sm:px-0">
+       <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
   {values.map((value, index) => (
     <Card
       key={index}

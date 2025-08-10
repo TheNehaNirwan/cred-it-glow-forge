@@ -88,11 +88,11 @@ const Services = () => {
   };
 
   return (
-    <section id="services" className="py-8 sm:py-12 md:py-16 lg:py-20 bg-background px-2 sm:px-4 md:px-6" ref={ref}>
-      <Container className="max-w-7xl px-2 sm:px-4 md:px-6 lg:px-8">
+    <section id="services" className="py-12 sm:py-16 md:py-20 bg-background px-4 sm:px-6" ref={ref}>
+      <Container className="max-w-7xl">
         {/* Section Header */}
         <motion.div 
-          className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16 px-2 sm:px-4"
+          className="text-center mb-12 sm:mb-14 md:mb-16"
           style={{
             transform: isInView ? "none" : "translateY(50px)",
             opacity: isInView ? 1 : 0,
@@ -100,7 +100,7 @@ const Services = () => {
           }}
         >
         <motion.h2 
-  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3 md:mb-4"
+  className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4"
   initial={{ opacity: 0, scale: 0.5 }}
   whileInView={{ opacity: 1, scale: 1 }}
   viewport={{ once: true }}
@@ -111,7 +111,7 @@ const Services = () => {
 </motion.h2>
 
          <motion.p 
-  className="text-base sm:text-lg md:text-xl text-black font-medium max-w-3xl mx-auto px-2 sm:px-4"
+  className="text-lg sm:text-xl text-black font-medium max-w-3xl mx-auto px-4"
   initial={{ opacity: 0 }}
   whileInView={{ opacity: 1 }}
   viewport={{ once: true }}
@@ -131,7 +131,7 @@ const Services = () => {
 
         {/* Services Grid */}
         <motion.div 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12 lg:mb-16 px-2 sm:px-0"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-14 md:mb-16"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -162,10 +162,10 @@ const Services = () => {
                 }}
               />
               
-              <Card className="relative bg-background/80 backdrop-blur-sm border-2 group-hover:border-transparent transition-all duration-300 h-full mx-1 sm:mx-0">
-                <CardHeader className="text-center pb-2 sm:pb-3 md:pb-4 p-3 sm:p-4 md:p-6">
+              <Card className="relative bg-background/80 backdrop-blur-sm border-2 group-hover:border-transparent transition-all duration-300 h-full">
+                <CardHeader className="text-center pb-3 sm:pb-4">
                   <motion.div 
-                    className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 ${service.bgColor} rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3 md:mb-4 relative overflow-hidden`}
+                    className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 ${service.bgColor} rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 relative overflow-hidden`}
                     whileHover={{ scale: 1.2, rotate: 360 }}
                     transition={{ duration: 0.6 }}
                   >
@@ -181,14 +181,14 @@ const Services = () => {
                         ease: "linear",
                       }}
                     />
-                    <service.icon className={`h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 lg:h-7 lg:w-7 xl:h-8 xl:w-8 ${service.color} relative z-10`} />
+                    <service.icon className={`h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 ${service.color} relative z-10`} />
                   </motion.div>
-                  <CardTitle className={`text-base sm:text-lg md:text-xl group-hover:${service.color} transition-colors duration-300 px-1 sm:px-0`}>
+                  <CardTitle className={`text-lg sm:text-xl group-hover:${service.color} transition-colors duration-300`}>
                     {service.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="flex-1 flex flex-col p-3 sm:p-4 md:p-6">
-                  <p className="text-gray-600 leading-relaxed mb-3 sm:mb-4 md:mb-6 flex-1 text-xs sm:text-sm md:text-base">
+                <CardContent className="flex-1 flex flex-col">
+                  <p className="text-gray-600 leading-relaxed mb-4 sm:mb-6 flex-1 text-sm sm:text-base">
                     {service.description}
                   </p>
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
